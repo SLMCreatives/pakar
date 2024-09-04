@@ -78,12 +78,12 @@ export default function HomePage() {
         <div className="absolute top-0 h-full w-full bg-gradient-to-b from-transparent to-black object-cover"></div>
       </div>
       <div className="container z-10 flex h-[60vh] flex-col items-center justify-center gap-10 px-4">
-        <h1 className="-mb-10 text-[5rem] font-extrabold tracking-tight">
-          <span className="font-extrabold">Pakar</span>
+        <h1 className="-mb-10 text-[5rem] font-normal tracking-tight">
+          <span className="font-bold text-cyan-500">Pakar</span>
           .me
         </h1>
         <p className="text-balance text-center text-lg">
-          Database jurulatih profesional yang berpengalaman di Malaysia.
+          Book the best trainer in town for your business training needs.
         </p>
         <div className="flex w-full flex-row flex-wrap items-center justify-center gap-4 md:w-2/3">
           {categories.map((category) => (
