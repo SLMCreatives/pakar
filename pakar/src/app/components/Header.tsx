@@ -43,7 +43,7 @@ export default function Header() {
       </Link>
       <nav className="hidden flex-row gap-3 divide-x-2 divide-slate-50/50 md:flex">
         {navigation.map((item) => (
-          <Link key={item.name} href={item.href}>
+          <Link href={{ pathname: item.href }} key={item.name}>
             <p className="pl-3 text-white hover:text-cyan-200">{item.name}</p>
           </Link>
         ))}
@@ -65,7 +65,7 @@ export default function Header() {
             {mobilenav.map((item) => (
               <Link
                 key={item.name}
-                href={item.href}
+                href={{ pathname: item.href }}
                 onClick={() => closeMenu()}
               >
                 <p className="text-lg text-black hover:font-bold hover:text-cyan-500">
