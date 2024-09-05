@@ -20,8 +20,17 @@ export default function LoginPage() {
           type="password"
           required
         />
-        <button formAction={login}>Log in</button>
-        <button formAction={signup}>Sign up</button>
+        <div className="flex flex-row gap-4 my-4">
+          <button
+            className="p-1 px-4 rounded-full bg-slate-700"
+            formAction={login}
+          >
+            Log in
+          </button>
+          <button className="p-1 px-4 rounded-full" formAction={signup}>
+            Create Account
+          </button>
+        </div>
       </form>
     </div>
   );

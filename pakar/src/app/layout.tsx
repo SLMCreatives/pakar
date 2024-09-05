@@ -23,13 +23,7 @@ export default function RootLayout({
   return (
     <html lang="en" className={poppins.className}>
       <body>
-        <div className="bg-black">
-          <div className="relative z-20 mx-auto flex flex-row items-center justify-center">
-            <Header />
-          </div>
-          {children}
-          <Footer />
-        </div>
+        <div className="bg-black">{children}</div>
       </body>
     </html>
   );

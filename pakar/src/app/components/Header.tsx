@@ -8,7 +8,7 @@ const navigation = [
     href: "/trainers",
   },
   {
-    name: "Login",
+    name: "Login/Signup",
     href: "/login",
   },
 ];
@@ -28,7 +28,7 @@ const mobilenav = [
   },
   {
     name: "Login",
-    href: "/",
+    href: "/login",
   },
 ];
 export default function Header() {
