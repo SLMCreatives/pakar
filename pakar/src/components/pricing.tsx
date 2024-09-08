@@ -116,7 +116,7 @@ export function PricingSection() {
           </CardHeader>
           <Separator className="" />
           <CardContent className="flex flex-col gap-2 py-4 text-sm">
-            <p className="font-bold">What's included</p>
+            <p className="font-bold">What is included</p>
             <p className="text-muted-foreground">
               Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa,
               iste veritatis nam doloremque nesciunt consequuntur. Tempora
