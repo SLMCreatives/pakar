@@ -1,8 +1,8 @@
 import { createClient } from "@/utils/supabase/server";
-import Dashboard from "@/components/dashboard-04";
+import Dashboard from "@/components/pricing";
 import { redirect } from "next/navigation";
 
-export default async function SettingsPage() {
+export default async function PricingPage() {
   const supabase = createClient();
 
   const {
@@ -24,11 +24,8 @@ export default async function SettingsPage() {
   }
 
   return (
-    <div className="flex flex-col gap-8 h-screen items-center justify-center -mt-20">
+    <div className="flex flex-col gap-8 -mt-32">
       <div className="mx-auto w-full max-w-6xl gap-2 pt-16 items-center justify-center">
-        <h1 className="text-3xl text-left font-semibold px-4 md:px-10">
-          Settings
-        </h1>
         <Dashboard />
       </div>
     </div>

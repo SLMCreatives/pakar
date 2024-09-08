@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import { CircleUser, Menu, Package2, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -13,8 +15,11 @@ import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 import Image from "next/image";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { signout } from "@/app/signout/action";
 
-export default function Dheader() {
+export default function Dheader({ user }: { user: any }) {
+  console.log(user);
+  const userImage = user.user_metadata.avatar_url;
   return (
     <div className="flex min-h-[150px] w-full flex-col">
       <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
@@ -30,19 +35,19 @@ export default function Dheader() {
             <span className="sr-only">Pakar.me</span>
           </Link>
           <Link
-            href="/private/dashboard"
+            href="/dashboard"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
             Dashboard
           </Link>
           <Link
-            href="/private/settings"
+            href="/settings"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
-            Setting
+            Find Trainers
           </Link>
           <Link
-            href="/private/pricing"
+            href="/pricing"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
             Upgrade +
@@ -72,19 +77,19 @@ export default function Dheader() {
                 <span className="sr-only">Pakar.me</span>
               </Link>
               <Link
-                href="/private/dashboard"
+                href="/dashboard"
                 className="text-muted-foreground transition-colors hover:text-foreground"
               >
                 Dashboard
               </Link>
               <Link
-                href="/private/settings"
+                href="/settings"
                 className="text-muted-foreground transition-colors hover:text-foreground"
               >
-                Setting
+                Find Trainers
               </Link>
               <Link
-                href="/private/pricing"
+                href="/pricing"
                 className="text-muted-foreground transition-colors hover:text-foreground"
               >
                 Upgrade +
@@ -106,21 +111,48 @@ export default function Dheader() {
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
               <Button variant="secondary" size="icon" className="rounded-full">
-                <CircleUser className="h-5 w-5" />
+                <Avatar className="h-8 w-8">
+                  <AvatarImage
+                    src={userImage}
+                    width={32}
+                    height={32}
+                    alt={user?.user_metadata?.full_name}
+                  />
+                  <AvatarFallback>
+                    {user?.user_metadata?.full_name.slice(0, 1)}
+                  </AvatarFallback>
+                </Avatar>
                 <span className="sr-only">Toggle user menu</span>
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
               <DropdownMenuLabel>My Account</DropdownMenuLabel>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Settings</DropdownMenuItem>
-              <DropdownMenuItem>Support</DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href="/dashboard">Dashboard</Link>
+              </DropdownMenuItem>
+              <DropdownMenuItem>
+                <Link href="/settings">My Trainers</Link>
+              </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Logout</DropdownMenuItem>
+              <DropdownMenuItem>
+                <Button
+                  variant="ghost"
+                  className="text-left mx-0 px-0"
+                  onClick={() => handleSignOut()}
+                >
+                  Logout
+                </Button>
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
       </header>
     </div>
   );
+}
+
+export function handleSignOut() {
+  console.log("here");
+  signout();
 }

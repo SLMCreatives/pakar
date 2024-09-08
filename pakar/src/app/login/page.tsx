@@ -1,37 +1,29 @@
-import { login, signup } from "./action";
+"use client";
 
-export default function LoginPage() {
-  return (
-    <div className="flex h-screen items-center justify-center text-white">
-      <form className="flex flex-col gap-4">
-        <label htmlFor="email">Email:</label>
-        <input
-          id="email"
-          className="text-black p-1 px-2 rounded-sm"
-          name="email"
-          type="email"
-          required
-        />
-        <label htmlFor="password">Password:</label>
-        <input
-          id="password"
-          className="text-black p-1 px-2 rounded-sm"
-          name="password"
-          type="password"
-          required
-        />
-        <div className="flex flex-row gap-4 my-4">
-          <button
-            className="p-1 px-4 rounded-full bg-slate-700"
-            formAction={login}
-          >
-            Log in
-          </button>
-          <button className="p-1 px-4 rounded-full" formAction={signup}>
-            Create Account
-          </button>
-        </div>
-      </form>
-    </div>
-  );
+import { login, signup } from "./action";
+import Loginpage from "@/components/authentication-04";
+import { createClient } from "@/utils/supabase/server";
+import { redirect } from "../../../node_modules/next/navigation";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { revalidatePath } from "../../../node_modules/next/cache";
+import { signout } from "../signout/action";
+
+export default async function LoginPage() {
+  const supabase = createClient();
+  const { data: user } = await supabase.auth.getUser();
+  if (user.user !== null) {
+    return (
+      <div className="flex flex-col gap-2 h-screen items-center justify-center text-white">
+        <p>Already logged in as {user.user.email}</p>
+        <Link href="/dashboard">Go To Dashboard</Link>
+      </div>
+    );
+  } else {
+    return (
+      <div className="flex h-screen items-center justify-center text-white">
+        <Loginpage />
+      </div>
+    );
+  }
 }

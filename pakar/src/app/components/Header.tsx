@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { useState } from "react";
 
 const navigation = [
   {
@@ -31,7 +32,8 @@ const mobilenav = [
     href: "/login",
   },
 ];
-export default function Header() {
+export default async function Header() {
+  const [showMenu, setShowMenu] = useState(false);
   return (
     <div className="flex w-full flex-row items-center justify-end gap-4 px-4 py-4">
       <Link href="/" className="fixed left-4 top-4">
@@ -88,15 +90,15 @@ export default function Header() {
   );
 }
 
-function openMenu() {
+async function openMenu() {
   document.getElementById("mobile-menu")?.classList.replace("hidden", "fixed");
 }
 
-function closeMenu() {
+async function closeMenu() {
   document.getElementById("mobile-menu")?.classList.replace("fixed", "hidden");
 }
 
-function toggleMenu() {
+async function toggleMenu() {
   if (document.getElementById("mobile-menu")?.classList.contains("hidden")) {
     openMenu();
   } else {
