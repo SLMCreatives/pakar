@@ -77,8 +77,8 @@ export default function Dashboard() {
   const [section, setsection] = useState("standard");
   return (
     <main className="flex flex-1 flex-col gap-4  p-6 md:gap-8 md:p-10">
-      <div className="mx-auto grid w-full max-w-6xl items-start gap-6 md:grid-cols-[180px_1fr] lg:grid-cols-[250px_1fr]">
-        <nav className="md:grid flex flex-wrap gap-2 text-sm text-muted-foreground sticky top-10">
+      <div className="mx-auto grid w-full max-w-6xl items-start gap-6">
+        {/* <nav className="md:grid flex flex-wrap gap-2 text-sm text-muted-foreground sticky top-10">
           {sections.map((item) => (
             <Link
               href="#"
@@ -92,8 +92,7 @@ export default function Dashboard() {
               {item.name}
             </Link>
           ))}
-        </nav>
-        <hr className="md:hidden"></hr>
+        </nav> */}
         <div className="px-4 grid gap-6">
           <PricingSection />
         </div>
@@ -104,23 +103,17 @@ export default function Dashboard() {
 
 export function PricingSection() {
   return (
-    <div className="grid gap-6">
+    <div className="grid md:grid-cols-2  gap-6">
       {sections.map((section: any) => (
         <Card key={section.component} id={section.component}>
           <CardHeader>
-            <CardTitle>{section.name} Plan</CardTitle>
-            <CardDescription>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Cupiditate, a.
-            </CardDescription>
+            <CardTitle className="text-2xl">{section.name} Plan</CardTitle>
           </CardHeader>
           <Separator className="" />
           <CardContent className="flex flex-col gap-2 py-4 text-sm">
             <p className="font-bold">What is included</p>
             <p className="text-muted-foreground">
-              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa,
-              iste veritatis nam doloremque nesciunt consequuntur. Tempora
-              libero aspernatur magnam porro?
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ipsa.
             </p>
             <ul className="list-inside list-disc">
               {section.features.map((feature: any) => (

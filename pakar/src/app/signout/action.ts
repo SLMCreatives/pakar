@@ -11,7 +11,7 @@ export async function signout() {
 
   if (error) {
     redirect("/error");
-  } else {
-    redirect("/login");
   }
+
+  redirect("/login");
 }

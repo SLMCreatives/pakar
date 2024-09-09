@@ -40,6 +40,17 @@ export async function signup(formData: FormData) {
   if (error) {
     redirect("/error");
   }
+
+  if (!error) {
+    const { error } = await supabase
+      .from("users_table")
+      .insert([{ email: data.email }]);
+
+    if (error) {
+      redirect("/error");
+    }
+  }
+
   revalidatePath("/", "layout");
-  redirect("/private");
+  redirect("/confirm");
 }

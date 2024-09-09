@@ -44,7 +44,7 @@ const sections = [
   },
 ];
 
-export default function Dashboard({ dname, demail, dage, did }: any) {
+export default function Dashboard({ dname, demail, dage, did, avatar }: any) {
   const [name, setName] = useState(dname);
   const [age, setAge] = useState("");
   const [section, setsection] = useState("basic");
@@ -76,6 +76,7 @@ export default function Dashboard({ dname, demail, dage, did }: any) {
                 demail={demail}
                 dage={dage}
                 did={did}
+                avatar={avatar}
               />
             </div>
           )}

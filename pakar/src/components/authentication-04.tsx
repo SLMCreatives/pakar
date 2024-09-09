@@ -6,10 +6,8 @@ import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-/* import { signInWithOAuth } from "@/app/signinwithOAuth/actions";
- */ import { signup, login } from "@/app/login/action";
-/* import { createClient } from "@/utils/supabase/server";
-import { redirect } from "../../node_modules/next/navigation"; */
+import { signInWithOAuth } from "@/app/signinwithOAuth/actions";
+import { signup, login } from "@/app/login/action";
 
 export default function LoginPage() {
   return (
@@ -48,27 +46,18 @@ export default function LoginPage() {
             <Button type="submit" className="w-full" formAction={login}>
               Login
             </Button>
-            <div className="mt-4 text-center text-sm">
-              Don&apos;t have an account?{" "}
-              <Button variant="ghost" className="underline" formAction={signup}>
-                Sign up
-              </Button>
-            </div>
-          </form>
-          {/*  <Button
-            variant="outline"
-            className="w-full text-black/50"
-            onClick={() => handleSignInOut()}
-          >
-            Login with Google
-          </Button> 
-          <div className="mt-4 text-center text-sm">
-            Don&apos;t have an account?{" "}
-            <Button variant="ghost" className="underline" formAction={signup}>
+            <Button className=" w-full" onClick={() => signInWithOAuth()}>
+              Login with Google
+            </Button>
+            <Button
+              type="submit"
+              variant="ghost"
+              className="underline"
+              formAction={signup}
+            >
               Sign up
             </Button>
-          </div>
-          */}
+          </form>
         </div>
       </div>
       <div className="hidden bg-muted lg:block">

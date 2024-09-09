@@ -19,6 +19,10 @@ export default async function DashboardPage() {
     .eq("auth_id", user?.id)
     .single();
 
+  const { data: avatar } = await supabase.storage
+    .from("avatar")
+    .createSignedUrl(user.id + "-" + ".jpg", 3600);
+
   if (error) {
     redirect("/error");
   }
@@ -31,6 +35,7 @@ export default async function DashboardPage() {
           demail={data?.email}
           dage={data?.age}
           did={data?.auth_id}
+          avatar={avatar}
         />
       </div>
     </div>

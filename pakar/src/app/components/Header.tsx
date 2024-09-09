@@ -9,8 +9,8 @@ const navigation = [
     href: "/trainers",
   },
   {
-    name: "Login/Signup",
-    href: "/login",
+    name: "Dashboard",
+    href: "/dashboard",
   },
 ];
 
