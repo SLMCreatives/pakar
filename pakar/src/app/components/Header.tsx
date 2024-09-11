@@ -57,7 +57,7 @@ export default async function Header() {
         </button>
         <div
           id="mobile-menu"
-          className="fixed right-0 top-0 h-screen w-1/2 rounded-l-xl bg-white shadow-xl shadow-black"
+          className="hidden right-0 top-0 h-screen w-1/2 rounded-l-xl bg-white shadow-xl shadow-black"
         >
           <button className="fixed right-4 top-8" onClick={() => toggleMenu()}>
             X
