@@ -1,9 +1,9 @@
 "use server";
 
-import { revalidatePath } from "next/cache";
-import { redirect } from "next/navigation";
-
+import { revalidatePath } from "../../../node_modules/next/cache";
 import { createClient } from "@/utils/supabase/server";
+import { redirect } from "../../../node_modules/next/navigation";
+import { headers } from "../../../node_modules/next/headers";
 
 export async function login(formData: FormData) {
   const supabase = createClient();
@@ -19,10 +19,10 @@ export async function login(formData: FormData) {
 
   if (error) {
     redirect("/error");
+  } else {
+    revalidatePath("/", "layout");
+    redirect("/dashboard");
   }
-
-  revalidatePath("/", "layout");
-  redirect("/dashboard");
 }
 
 export async function signup(formData: FormData) {
@@ -53,4 +53,21 @@ export async function signup(formData: FormData) {
 
   revalidatePath("/", "layout");
   redirect("/confirm");
+}
+
+export async function signInWithOAuth() {
+  const supabase = createClient();
+  const origin = headers().get("origin");
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: `${origin}/auth/callback`, // origin,
+    },
+  });
+
+  if (error) {
+    console.log(error);
+  } else {
+    return redirect(data.url);
+  }
 }

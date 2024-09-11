@@ -1,16 +1,7 @@
 "use client";
-
-import Link from "next/link";
-import { useState } from "react";
-import BasicInfoSection from "@/app/components/dashboard/BasicInformation";
-import QualificationSection from "@/app/components/dashboard/Qualification";
-import ExpSection from "@/app/components/dashboard/Exp";
-import SpecialSection from "@/app/components/dashboard/Special";
-import ContactSection from "@/app/components/dashboard/Contact";
 import {
   Card,
   CardContent,
-  CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
@@ -74,7 +65,6 @@ const sections = [
 ];
 
 export default function Dashboard() {
-  const [section, setsection] = useState("standard");
   return (
     <main className="flex flex-1 flex-col gap-4  p-6 md:gap-8 md:p-10">
       <div className="mx-auto grid w-full max-w-6xl items-start gap-6">

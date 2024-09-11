@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { CircleUser, Menu, Package2, Search } from "lucide-react";
+import { Menu, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -13,13 +13,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
 import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
-import Image from "next/image";
+
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { signout } from "@/app/signout/action";
 
-export default function Dheader({ user, avatar }: any) {
-  const userImage = avatar || "/logo.jpg";
-  console.log(userImage);
+export default function Dheader({ user, avtrURL }: any) {
+  const uAvatarsrc = avtrURL.avatarurl;
   return (
     <div className="flex min-h-[150px] w-full flex-col">
       <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
@@ -113,10 +112,10 @@ export default function Dheader({ user, avatar }: any) {
               <Button variant="secondary" size="icon" className="rounded-full">
                 <Avatar className="h-8 w-8">
                   <AvatarImage
-                    src={userImage.signedUrl}
+                    src={uAvatarsrc}
                     width={32}
                     height={32}
-                    alt={user?.user_metadata?.full_name}
+                    alt={user?.user_metadata?.full_name.slice(0, 1)}
                   />
                   <AvatarFallback>
                     {user?.user_metadata?.full_name.slice(0, 1)}
