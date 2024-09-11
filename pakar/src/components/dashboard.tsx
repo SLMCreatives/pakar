@@ -24,7 +24,7 @@ import {
   TableBody,
   TableCell,
 } from "./ui/table";
-import Image from "../../../../node_modules/next/image";
+import Image from "../../node_modules/next/image";
 
 export function TrainersTable({ data }: any) {
   const dataX = data;
