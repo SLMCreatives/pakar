@@ -25,6 +25,7 @@ import {
   TableCell,
 } from "./ui/table";
 import Image from "../../node_modules/next/image";
+import Link from "../../node_modules/next/link";
 
 export function TrainersTable({ data }: any) {
   const dataX = data;
@@ -105,7 +106,11 @@ export function TrainersTable({ data }: any) {
                       </Button>
                     </DropdownMenuTrigger>
                     <DropdownMenuContent align="end">
-                      <DropdownMenuItem>Phone</DropdownMenuItem>
+                      <DropdownMenuItem>
+                        <Link href={`/findtrainers/${item.auth_user_id}`}>
+                          Profile
+                        </Link>
+                      </DropdownMenuItem>
                       <DropdownMenuItem>Email</DropdownMenuItem>
                       <DropdownMenuItem>LinkedIn</DropdownMenuItem>
                     </DropdownMenuContent>
