@@ -196,7 +196,7 @@ export function BasicInfoSection({
   }
   return (
     <div className="grid lg:grid-cols-3 gap-6">
-      <h3 className="text-xl font-bold lg:col-span-3">{name}'s Profile</h3>
+      <h3 className="text-xl font-bold lg:col-span-3">{name + `'s`} Profile</h3>
 
       <Card
         x-chunk="A form to update the plugins directory with a checkbox to allow administrators to change the directory."
