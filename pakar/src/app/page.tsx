@@ -87,7 +87,7 @@ export default function HomePage() {
         </p>
         <div className="flex w-full flex-row flex-wrap items-center justify-center gap-4 md:w-2/3">
           {categories.map((category) => (
-            <Link href="/trainers" key={category}>
+            <Link href="/findtrainers" key={category}>
               <div
                 className="rounded-full bg-transparent px-3 py-1 text-sm tracking-wide ring-1 ring-white hover:bg-white hover:text-black hover:shadow-lg"
                 key={category}
@@ -100,7 +100,7 @@ export default function HomePage() {
       </div>
       <div className="grid grid-cols-2 items-start justify-center gap-x-4 gap-y-8 px-8 pt-36 md:grid-cols-3 md:px-10 lg:grid-cols-3">
         {profiles.map((profile) => (
-          <Link href="/trainers/profile" key={profile.name}>
+          <Link href="/findtrainers" key={profile.name}>
             <div
               className="group flex flex-col items-center gap-0 px-2 py-2 text-center md:px-6 md:py-4"
               key={profile.name}
@@ -118,7 +118,7 @@ export default function HomePage() {
           </Link>
         ))}
       </div>
-      <Link href="/trainers">
+      <Link href="/findtrainers">
         <div className="flex flex-col items-center gap-0 rounded-full bg-transparent px-4 py-1 text-center text-white ring-1 ring-white">
           <p className="text-sm">View All</p>
         </div>

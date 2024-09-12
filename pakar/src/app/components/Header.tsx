@@ -21,7 +21,7 @@ const mobilenav = [
   },
   {
     name: "Trainers",
-    href: "/trainers",
+    href: "/findtrainers",
   },
   {
     name: "Events",

@@ -40,7 +40,7 @@ export default function Dheader({ user, avtrURL }: any) {
             Dashboard
           </Link>
           <Link
-            href="/settings"
+            href="/findtrainers"
             className="text-muted-foreground transition-colors hover:text-foreground"
           >
             Find Trainers
@@ -82,7 +82,7 @@ export default function Dheader({ user, avtrURL }: any) {
                 Dashboard
               </Link>
               <Link
-                href="/settings"
+                href="/findtrainers"
                 className="text-muted-foreground transition-colors hover:text-foreground"
               >
                 Find Trainers
@@ -131,7 +131,7 @@ export default function Dheader({ user, avtrURL }: any) {
                 <Link href="/dashboard">Dashboard</Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
-                <Link href="/settings">My Trainers</Link>
+                <Link href="/findtrainers">My Trainers</Link>
               </DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem>

@@ -1,7 +1,7 @@
 import { createClient } from "@/utils/supabase/server";
-import { TrainersTable } from "@/components/dashboard";
+import { TrainersTable } from "@/components/trainerstable";
 
-export default async function SettingsPage() {
+export default async function TrainersPage() {
   const supabase = createClient();
   const {
     data: { user },
