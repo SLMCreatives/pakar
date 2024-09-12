@@ -3,7 +3,6 @@ import Footer from "@/app/components/DFooter";
 import { createClient } from "@/utils/supabase/server";
 import { revalidatePath } from "../../../../node_modules/next/cache";
 import { redirect } from "../../../../node_modules/next/navigation";
-import { Toaster } from "@/components/ui/toaster";
 
 export default async function RootLayout({
   children,
@@ -29,11 +28,9 @@ export default async function RootLayout({
     console.log(error);
   } else if (uAvatar) {
     return (
-      <div className="absolute top-0 w-full z-40 min-h-screen justify-start bg-white text-black">
+      <div className="absolute top-0 w-full z-40 justify-start bg-white text-black">
         <Dheader user={user} avtrURL={uAvatar} />
         {children}
-        <Toaster />
-        <Footer />
       </div>
     );
   }

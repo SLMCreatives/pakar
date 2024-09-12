@@ -33,59 +33,63 @@ export function TrainersTable({ data }: any) {
     <Card>
       <CardHeader>
         <CardTitle>Trainers</CardTitle>
-        <CardDescription>
-          Manage your products and view their sales performance.
-        </CardDescription>
+        <CardDescription>Find the perfect trainer for you</CardDescription>
       </CardHeader>
       <CardContent>
-        <Table>
+        <Table className="w-full hidden md:table">
           <TableHeader>
             <TableRow>
-              <TableHead className="hidden sm:table-cell">Avatar</TableHead>
-              <TableHead>Name</TableHead>
-              <TableHead>Speciality</TableHead>
-              <TableHead>Rate</TableHead>
-              <TableHead className="hidden md:table-cell">
+              <TableHead className="text-nowrap">Name</TableHead>
+              <TableHead className="hidden md:table-cell">Speciality</TableHead>
+              <TableHead className="hidden md:table-cell">Rate</TableHead>
+              <TableHead className="text-center hidden md:table-cell">
                 Years of Exp
               </TableHead>
               <TableHead className="hidden md:table-cell">Joined at</TableHead>
-              <TableHead>Contact</TableHead>
+              <TableHead className="hidden md:table-cell">Contact</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {dataX.map((item: any) => (
-              <TableRow key={item.auth_user_id}>
-                <TableCell className="hidden sm:table-cell">
-                  <div className="relative h-10 w-10">
-                    <Image
-                      width={40}
-                      height={40}
-                      className="w-10 h-10 rounded-full"
-                      src={item?.avatarurl || "/logo.jpg"}
-                      alt={item.name}
-                    />
-                  </div>
-                </TableCell>
-                <TableCell>
-                  <div className="flex items-center space-x-3">
+              /*  <Link
+                key={item.auth_user_id}
+                href={`/findtrainers/${item.auth_user_id}`}
+              > */
+              <TableRow className="hover:bg-muted group cursor-pointer">
+                <TableCell className="text-nowrap">
+                  <div className="flex flex-row text-nowrap gap-2 items-center ">
+                    <Link
+                      key={item.auth_user_id}
+                      href={`/findtrainers/${item.auth_user_id}`}
+                    >
+                      <Image
+                        width={40}
+                        height={40}
+                        className="w-12 h-12 md:w-8 md:h-8 rounded-full group-hover:ring-1 ring-slate-500 aspect-square object-cover"
+                        src={item?.avatarurl || "/logo.jpg"}
+                        alt={item.name}
+                      />
+                    </Link>
                     <div className="flex flex-col">
-                      <p className="text-sm font-medium leading-none">
+                      <p className="text-xl md:text-sm font-medium text-nowrap leading-none">
                         {item.user_name}
                       </p>
                     </div>
                   </div>
                 </TableCell>
-                <TableCell>
+                <TableCell className="text-wrap hidden md:table-cell">
                   <Badge variant={item.speciality}>{item.speciality}</Badge>
                 </TableCell>
-                <TableCell>RM {item.rate_per_hour}</TableCell>
-                <TableCell className="hidden md:table-cell text-center">
+                <TableCell className="text-center hidden md:table-cell">
+                  RM {item.rate_per_hour}
+                </TableCell>
+                <TableCell className="text-center hidden md:table-cell">
                   {item.total_years_exp}
                 </TableCell>
                 <TableCell className="hidden md:table-cell">
                   {new Date(item.created_at).toLocaleDateString()}
                 </TableCell>
-                <TableCell>
+                <TableCell className="hidden md:table-cell">
                   <DropdownMenu>
                     <DropdownMenuTrigger asChild>
                       <Button variant="outline" className="h-8 w-8 p-0">
@@ -117,9 +121,50 @@ export function TrainersTable({ data }: any) {
                   </DropdownMenu>
                 </TableCell>
               </TableRow>
+              /*               </Link>
+               */
             ))}
           </TableBody>
         </Table>
+        <div className="md:hidden grid grid-cols-1 gap-4">
+          {dataX.map((item: any) => (
+            <Link
+              key={item.auth_user_id}
+              href={`/findtrainers/${item.auth_user_id}`}
+            >
+              <Card className="group cursor-pointer aspect-square">
+                <div className="flex flex-col gap-4 p-2">
+                  <Image
+                    width={200}
+                    height={200}
+                    className="w-full h-fit rounded-sm group-hover:ring-1 ring-slate-500 aspect-square object-cover"
+                    src={item?.avatarurl || "/logo.jpg"}
+                    alt={item.name}
+                  />
+                  <div className="flex flex-col gap-2">
+                    <p className="text-xl md:text-sm font-bold overflow-clip group-hover:overflow-visible text-nowrap leading-none">
+                      {item.user_name}
+                    </p>
+                    <div className="flex flex-row flex-nowrap w-full justify-between gap-2">
+                      <Badge
+                        className="flex w-fit bg-gradient-to-br text-white from-violet-500 to-fuchsia-500 text-xs text-nowrap"
+                        variant={item.speciality}
+                      >
+                        #{item.speciality}
+                      </Badge>
+                      <Badge
+                        className="flex w-fit text-xs"
+                        variant={item.total_years_exp}
+                      >
+                        {item.total_years_exp} exp
+                      </Badge>
+                    </div>
+                  </div>
+                </div>
+              </Card>
+            </Link>
+          ))}
+        </div>
       </CardContent>
       <CardFooter>
         <div className="text-xs text-muted-foreground">
