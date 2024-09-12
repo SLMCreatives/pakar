@@ -55,7 +55,10 @@ export function TrainersTable({ data }: any) {
                 key={item.auth_user_id}
                 href={`/findtrainers/${item.auth_user_id}`}
               > */
-              <TableRow className="hover:bg-muted group cursor-pointer">
+              <TableRow
+                key={item.auth_user_id}
+                className="hover:bg-muted group cursor-pointer"
+              >
                 <TableCell className="text-nowrap">
                   <div className="flex flex-row text-nowrap gap-2 items-center ">
                     <Link
