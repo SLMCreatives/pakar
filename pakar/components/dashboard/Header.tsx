@@ -1,7 +1,6 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
 
 const navigation = [
   {
@@ -32,8 +31,7 @@ const mobilenav = [
     href: "/login",
   },
 ];
-export default async function Header() {
-  const [showMenu, setShowMenu] = useState(false);
+export default function Header() {
   return (
     <div className="flex w-full flex-row items-center justify-end gap-4 px-4 py-4">
       <Link href="/" className="fixed left-4 top-4">
@@ -52,24 +50,18 @@ export default async function Header() {
       </nav>
 
       <div className="fixed right-4 top-6 md:hidden">
-        <button onClick={() => toggleMenu()}>
+        <button>
           <img src="/menu.svg" alt="menu" className="h-6 w-6 fill-white" />
         </button>
         <div
           id="mobile-menu"
           className="hidden right-0 top-0 h-screen w-1/2 rounded-l-xl bg-white shadow-xl shadow-black"
         >
-          <button className="fixed right-4 top-8" onClick={() => toggleMenu()}>
-            X
-          </button>
+          <button className="fixed right-4 top-8">X</button>
 
           <nav className="mt-32 flex flex-col gap-8 pl-8">
             {mobilenav.map((item) => (
-              <Link
-                key={item.name}
-                href={{ pathname: item.href }}
-                onClick={() => closeMenu()}
-              >
+              <Link key={item.name} href={{ pathname: item.href }}>
                 <p className="text-lg text-black hover:font-bold hover:text-cyan-500">
                   {item.name}
                 </p>
@@ -88,20 +80,4 @@ export default async function Header() {
       <div className="fixed right-4 top-4"></div>
     </div>
   );
-}
-
-async function openMenu() {
-  document.getElementById("mobile-menu")?.classList.replace("hidden", "fixed");
-}
-
-async function closeMenu() {
-  document.getElementById("mobile-menu")?.classList.replace("fixed", "hidden");
-}
-
-async function toggleMenu() {
-  if (document.getElementById("mobile-menu")?.classList.contains("hidden")) {
-    openMenu();
-  } else {
-    closeMenu();
-  }
 }
