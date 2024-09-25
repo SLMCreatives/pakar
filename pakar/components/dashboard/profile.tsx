@@ -1,7 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { CircleUser, Menu, Package2, Search } from "lucide-react";
+import {
+  CircleUser,
+  Delete,
+  DeleteIcon,
+  Menu,
+  Package2,
+  Search,
+  SearchIcon,
+  Trash2Icon,
+} from "lucide-react";
 
 import { Button } from "@/components/ui/button";
 import {
@@ -37,29 +46,29 @@ import { createClient } from "@/utils/supabase/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 
-export default function Profile({ data, user }: any) {
+export default function Profile({ data, user, cats }: any) {
   const [id, setUserID] = useState(`${user.id}`);
-  const [name, setName] = useState(`${data.name}`);
-  const [avtrURL, setAvatarURL] = useState(`${data.avatar_url}`);
-  const [bio, setBio] = useState(`${data.bio}`);
-  const [expY, setExpY] = useState(`${data.total_years_exp}`);
+  const [name, setName] = useState(`${data?.name}`);
+  const [avtrURL, setAvatarURL] = useState(`${data?.avatar_url}`);
+  const [bio, setBio] = useState(`${data?.bio}`);
+  const [expY, setExpY] = useState(`${data?.total_years_exp}`);
   //const [qual, setQual] = useState([`${data.qualification}`]);
-  const [speciality, setSpeciality] = useState(`${data.speciality}`);
+  const [speciality, setSpeciality] = useState(`${data?.speciality}`);
   //const [contactInfo, setContactInfo] = useState([`${data.contact}`]);
-  const [expInfo, setExpInfo] = useState([`${data.experience.expInfo}`]);
+  const [expInfo, setExpInfo] = useState([`${data.experience?.expInfo}`]);
   //const [modules, setModules] = useState([`${data.training_modules.modules}`]);
   const [approachInfo, setApproachInfo] = useState([
-    `${data.approach.approachInfo}`,
+    `${data.approach?.approachInfo}`,
   ]);
-  const [email, setEmail] = useState(`${data.contact.email}`);
-  const [phone, setPhone] = useState(`${data.contact.phone}`);
-  const [fb, setFb] = useState(`${data.contact.facebook}`);
-  const [x, setX] = useState(`${data.contact.x}`);
-  const [li, setLi] = useState(`${data.contact.linkedin}`);
-  const [website, setWebsite] = useState(`${data.contact.website}`);
+  const [email, setEmail] = useState(`${data.contact?.email}`);
+  const [phone, setPhone] = useState(`${data.contact?.phone}`);
+  const [fb, setFb] = useState(`${data.contact?.facebook}`);
+  const [x, setX] = useState(`${data.contact?.x}`);
+  const [li, setLi] = useState(`${data.contact?.linkedin}`);
+  const [website, setWebsite] = useState(`${data.contact?.website}`);
   const [moduleValue, setModuleVale] = useState("");
   const [modules, setModules] = useState<string[]>(
-    `${data.training_modules.modules}`.split(",")
+    `${data.training_modules?.modules}`.split(",")
   );
   const handleModuleChange = (e: any) => {
     setModuleVale(e.target.value);
@@ -89,7 +98,7 @@ export default function Profile({ data, user }: any) {
 
   const [qualValue, setQualValue] = useState("");
   const [quals, setQuals] = useState<string[]>(
-    `${data.qualification.qual}`.split(",")
+    `${data.qualification?.qual}`.split(",")
   );
   const handleQualChange = (e: any) => {
     setQualValue(e.target.value);
@@ -119,6 +128,7 @@ export default function Profile({ data, user }: any) {
 
   const handleSubmit = async () => {
     const formData = {
+      cats: cats,
       id: id,
       name: name,
       bio: bio,
@@ -149,7 +159,7 @@ export default function Profile({ data, user }: any) {
     console.log(formData);
     const supabase = createClient();
     const { error } = await supabase
-      .from("trainer_profile")
+      .from(`${cats}_profile`)
       .update({
         name: formData.name,
         bio: formData.bio,
@@ -171,9 +181,21 @@ export default function Profile({ data, user }: any) {
   };
   return (
     <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-10">
-      <div className="mx-auto grid w-full max-w-6xl gap-2">
-        <h1 className="text-3xl font-semibold">Profile Details</h1>
-        <p className="text-sm">Loged In As: {name}</p>
+      <div className="mx-auto flex flex-row w-full max-w-6xl items-end justify-between">
+        <div className="flex flex-col gap-2 py-2">
+          <h1 className="text-3xl font-semibold">Profile Details</h1>
+          <p className="text-xs">
+            Logged in as:{" "}
+            <span className="bg-muted text-muted-foreground rounded-sm px-4 py-1">
+              {user.email}
+            </span>
+          </p>
+        </div>
+        <Link href={`/findtrainers/${data.user_id}`} target="_blank">
+          <Button variant="ghost" className="gap-2">
+            <SearchIcon className="h-4 w-4" /> View Profile
+          </Button>
+        </Link>
       </div>
       <div className="mx-auto grid w-full max-w-6xl items-start gap-6">
         <div className="grid gap-6">
@@ -230,7 +252,7 @@ export default function Profile({ data, user }: any) {
                       min={0}
                       max={50}
                       step={1}
-                      value={data.total_years_exp.value}
+                      value={data.total_years_exp?.value}
                       onValueChange={(e) => setExpY(e.toString())}
                     />
                   </div>
@@ -405,12 +427,17 @@ export default function Profile({ data, user }: any) {
                     />
                   </div>
                 </div>
-                <Button variant="outline" formAction={handleSubmit}>
-                  Save Profile
-                </Button>
+                <hr></hr>
+                <div className="flex flex-row mt-4 justify-between">
+                  <Button variant="outline" formAction={handleSubmit}>
+                    Publish
+                  </Button>
+                  <Button variant="destructive" disabled size="icon">
+                    <Trash2Icon className="w-4 h-4" />
+                  </Button>
+                </div>
               </form>
             </CardContent>
-            <CardFooter className="border-t px-6 py-4"></CardFooter>
           </Card>
         </div>
       </div>

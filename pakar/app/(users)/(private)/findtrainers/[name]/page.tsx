@@ -21,15 +21,20 @@ import {
   BookCheckIcon,
   Contact2,
   Contact2Icon,
+  FacebookIcon,
+  Globe,
   Globe2,
   Handshake,
   InboxIcon,
+  Linkedin,
   Mail,
   Phone,
   SquareUserRound,
   SquareUserRoundIcon,
+  Twitter,
   UserIcon,
   X,
+  XIcon,
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
@@ -152,8 +157,8 @@ export default async function Page({ params }: any) {
               {userProfiles.qualification.qual.map(
                 (qual: any, index: number) => (
                   <Card key={index} className="w-full">
-                    <CardContent className="text-center justify-start flex py-2 gap-4 md:text-lg font-semibold">
-                      <AwardIcon className="h-6 w-6 fill-violet-300" />
+                    <CardContent className=" justify-start items-center flex py-2 gap-4 md:text-lg font-semibold">
+                      <AwardIcon className="h-8 w-8 fill-violet-300" />
                       {qual}
                     </CardContent>
                   </Card>
@@ -185,30 +190,30 @@ export default async function Page({ params }: any) {
           </CardHeader>
           <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="flex flex-col gap-4">
-              <p className="flex gap-2">
-                <Mail className="h-6 w-6 text-fuchsia-800" />{" "}
+              <p className="flex gap-4">
+                <Mail className="h-6 w-6 fill-fuchsia-300" />{" "}
                 {userProfiles.contact.email}
               </p>
-              <p className="flex gap-2">
-                <Phone className="h-6 w-6 text-fuchsia-800" />{" "}
+              <p className="flex gap-4">
+                <Phone className="h-6 w-6 fill-fuchsia-300" />{" "}
                 {userProfiles.contact.phone}
               </p>
-              <p className="flex gap-2">
-                <Globe2 className="h-6 w-6 text-fuchsia-800" />{" "}
+              <p className="flex gap-4">
+                <Globe className="h-6 w-6 fill-fuchsia-300" />{" "}
                 {userProfiles.contact.website}
               </p>
             </div>
             <div className="flex flex-col gap-4">
-              <p className="flex gap-2">
-                <FaceIcon className="h-6 w-6 text-fuchsia-800" />{" "}
+              <p className="flex gap-4">
+                <FacebookIcon className="h-6 w-6 fill-fuchsia-300" />{" "}
                 {userProfiles.contact.facebook}
               </p>
-              <p className="flex gap-2">
-                <X className="h-6 w-6 text-fuchsia-800" />{" "}
+              <p className="flex gap-4">
+                <Twitter className="h-6 w-6 fill-fuchsia-300" />{" "}
                 {userProfiles.contact.x}
               </p>
-              <p className="flex gap-2">
-                <Handshake className="h-6 w-6 text-fuchsia-800" />{" "}
+              <p className="flex gap-4">
+                <Linkedin className="h-6 w-6 fill-fuchsia-300" />{" "}
                 {userProfiles.contact.linkedin}
               </p>
             </div>

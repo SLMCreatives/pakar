@@ -1,6 +1,4 @@
-//import Dashboard from "@/components/dashboard/dashboard-04";
 import Profile from "@/components/dashboard/profile";
-import { Button } from "@/components/ui/button";
 import { createClient } from "@/utils/supabase/server";
 import { redirect } from "next/navigation";
 
@@ -24,17 +22,12 @@ export default async function DashboardPage() {
 
   if (error) {
     console.log(error);
-  } else if (!user_dataview) {
-    return redirect("/type");
   } else {
     return (
       <div className="flex flex-col gap-8 -mt-32">
         <div className="mx-auto w-full max-w-6xl gap-2 pt-16 items-center justify-center">
-          <Profile data={user_dataview} user={user} />
+          <Profile data={user_dataview} user={user} cats={cat} />
         </div>
-        {/* <div className="mx-auto w-full max-w-6xl gap-2 pt-16 items-center justify-center">
-          <Dashboard data={user_dataview} user={user} />
-        </div> */}
       </div>
     );
   }

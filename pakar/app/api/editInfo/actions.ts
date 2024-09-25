@@ -10,6 +10,7 @@ export async function editInfo(formData: FormData) {
     id: formData.get("id") as string,
     name: formData.get("name") as string,
     bio: formData.get("bio") as string,
+    cat: formData.get("cat") as string,
   };
   const { data: user, error } = await supabase
     .from("trainer_profile")

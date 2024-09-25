@@ -22,16 +22,11 @@ export const signUpAction = async (formData: FormData) => {
       emailRedirectTo: `${origin}/auth/callback`,
     },
   });
-
   if (error) {
     console.error(error.code + " " + error.message);
     return encodedRedirect("error", "/sign-up", error.message);
   } else {
-    return encodedRedirect(
-      "success",
-      "/type",
-      "Thanks for signing up! Please check your email for a verification link."
-    );
+    return redirect("/type");
   }
 };
 
@@ -49,7 +44,7 @@ export const signInAction = async (formData: FormData) => {
     return encodedRedirect("error", "/sign-in", error.message);
   }
 
-  return redirect("/dashboard");
+  return redirect("/findtrainers");
 };
 
 export const forgotPasswordAction = async (formData: FormData) => {
@@ -133,7 +128,7 @@ export const newUser = async (formdata: FormData) => {
   const id = formdata.get("id") as string;
   const categs = formdata.get("type") as string;
   const supabase = createClient();
-  const { data: usercat, error } = await supabase
+  const { data: usercat, error: usercaterror } = await supabase
     .from("user_categories")
     .insert([
       {
@@ -142,12 +137,20 @@ export const newUser = async (formdata: FormData) => {
       },
     ]);
 
-  if (error) {
-    console.log(error);
+  const { data: catprofile, error: profileerror } = await supabase
+    .from(`${categs}_profile`)
+    .insert([
+      {
+        user_id: id,
+      },
+    ]);
+
+  if (usercaterror || profileerror) {
+    console.log(usercaterror || profileerror);
+    redirect("/findtrainers");
   }
 
-  if (usercat) {
-    console.log("success");
+  if (usercat && catprofile) {
     return redirect("/dashboard");
   }
 };

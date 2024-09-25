@@ -17,10 +17,16 @@ export default async function RootLayout({
     return redirect("/sign-in");
   }
 
+  const { data: cat } = await supabase
+    .from("user_categories")
+    .select("category")
+    .eq("user_id", user?.id)
+    .single();
+
   const { data: uAvatar, error } = await supabase
-    .from("trainer_profile")
-    .select("avatarURL")
-    .eq("user_id", user.id)
+    .from(`${cat?.category}_profile`)
+    .select("*")
+    .eq("user_id", user?.id)
     .single();
 
   if (error) {
@@ -28,7 +34,7 @@ export default async function RootLayout({
   } else if (uAvatar)
     return (
       <div className="absolute top-0 w-full z-40 justify-start bg-white text-black">
-        <Dheader user={user} avtrURL={uAvatar} />
+        <Dheader user={user} avtrURL={uAvatar} userCat={cat} />
         {children}
       </div>
     );
