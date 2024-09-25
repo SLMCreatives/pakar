@@ -14,8 +14,7 @@ export default async function RootLayout({
     data: { user },
   } = await supabase.auth.getUser();
   if (!user) {
-    revalidatePath("/", "layout");
-    redirect("/sign-in");
+    return redirect("/sign-in");
   }
 
   const { data: uAvatar, error } = await supabase
