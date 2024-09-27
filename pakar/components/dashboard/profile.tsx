@@ -81,9 +81,9 @@ export default function Profile({ data, user, cats }: any) {
   const [approachInfo, setApproachInfo] = useState(`${data?.approach}`);
   const [email, setEmail] = useState(`${data.contact?.email}`);
   const [phone, setPhone] = useState(`${data.contact?.phone}`);
-  const [fb, setFb] = useState(`${data.contact?.facebook}`);
+  const [fb, setFb] = useState(`${data.contact?.fb}`);
   const [x, setX] = useState(`${data.contact?.x}`);
-  const [li, setLi] = useState(`${data.contact?.linkedin}`);
+  const [li, setLi] = useState(`${data.contact?.li}`);
   const [website, setWebsite] = useState(`${data.contact?.website}`);
   const [moduleValue, setModuleVale] = useState("");
   const [modules, setModules] = useState<string[]>(
