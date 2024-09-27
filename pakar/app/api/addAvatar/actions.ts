@@ -8,8 +8,8 @@ import { redirect } from "next/navigation";
 export async function addAvatar(formData: FormData) {
   const supabase = createClient();
   const formdata = {
-    id: formData.get("id") as string,
-    avatar: formData.get("avatar") as string,
+    id: formData.get("user_id") as string,
+    avatar: formData.get("avatar") as File,
   };
 
   const avatarFile = formdata.avatar;
@@ -20,11 +20,11 @@ export async function addAvatar(formData: FormData) {
 
   if (error) {
     console.log("Just error", error);
+  } else {
+    console.log("avatar uploaded");
+    revalidatePath("/", "layout");
+    redirect("/dashboard");
   }
-
-  console.log("avatar uploaded");
-  revalidatePath("/", "layout");
-  redirect("/dashboard");
 }
 
 export async function replaceAvatar(formData: FormData) {

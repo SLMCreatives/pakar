@@ -20,8 +20,6 @@ export default function Dheader({ user, avtrURL, userCat }: any) {
   const uAvatarsrc = avtrURL.avatarURL;
   const userData = user;
   const category = userCat.category;
-  console.log(category);
-
   if (category === "recruiter") {
     return (
       <div className="flex min-h-[150px] w-full flex-col">
@@ -164,6 +162,12 @@ export default function Dheader({ user, avtrURL, userCat }: any) {
               href="/dashboard"
               className="text-muted-foreground transition-colors hover:text-foreground"
             >
+              Dashboard
+            </Link>
+            <Link
+              href={`/findtrainers/${userData.id}`}
+              className="text-muted-foreground transition-colors hover:text-foreground"
+            >
               My Profile
             </Link>
           </nav>
@@ -198,6 +202,12 @@ export default function Dheader({ user, avtrURL, userCat }: any) {
                 </Link>
                 <Link
                   href="/dashboard"
+                  className="text-muted-foreground transition-colors hover:text-foreground"
+                >
+                  Dashboard
+                </Link>
+                <Link
+                  href={`/findtrainers/${userData.id}`}
                   className="text-muted-foreground transition-colors hover:text-foreground"
                 >
                   My Profile
@@ -242,7 +252,7 @@ export default function Dheader({ user, avtrURL, userCat }: any) {
                   <Link href="/dashboard">Dashboard</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <Link href="/findtrainers">My Profile</Link>
+                  <Link href={`/findtrainers/${userData.id}`}>My Profile</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem>

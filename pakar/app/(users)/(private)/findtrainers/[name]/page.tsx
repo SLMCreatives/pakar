@@ -42,7 +42,6 @@ import Link from "next/link";
 const gradient = "bg-gradient-to-r from-violet-500 to-fuchsia-500";
 
 export default async function Page({ params }: any) {
-  console.log(params);
   const supabase = createClient();
   const { data: userProfiles, error } = await supabase
     .from("trainer_profile")
@@ -53,7 +52,6 @@ export default async function Page({ params }: any) {
   if (error) {
     console.log(error);
   } else if (userProfiles) {
-    console.log(userProfiles);
     return (
       <div className="flex flex-col gap-8 h-screen items-center -mt-20 m-4 bg-white md:max-w-3xl lg:max-w-6xl md:mx-auto">
         <Image
@@ -133,16 +131,16 @@ export default async function Page({ params }: any) {
               </p>
             </CardHeader>
             <CardContent className="flex flex-col gap-2">
-              {userProfiles.training_modules.modules.map(
-                (module: any, index: number) => (
+              {userProfiles.training_modules.modules
+                .split(",")
+                .map((module: any, index: number) => (
                   <Card key={index}>
                     <CardContent className="text-center justify-start flex py-2 gap-4 md:text-lg font-semibold">
                       <BookCheckIcon className="h-6 w-6 fill-fuchsia-300" />
                       {module}
                     </CardContent>
                   </Card>
-                )
-              )}
+                ))}
             </CardContent>
           </Card>
           {/* Qualifications*/}
@@ -154,16 +152,16 @@ export default async function Page({ params }: any) {
               </p>
             </CardHeader>
             <CardContent className="flex flex-col gap-2">
-              {userProfiles.qualification.qual.map(
-                (qual: any, index: number) => (
+              {userProfiles.qualification.qual
+                .split(",")
+                .map((qual: any, index: number) => (
                   <Card key={index} className="w-full">
                     <CardContent className=" justify-start items-center flex py-2 gap-4 md:text-lg font-semibold">
                       <AwardIcon className="h-8 w-8 fill-violet-300" />
                       {qual}
                     </CardContent>
                   </Card>
-                )
-              )}
+                ))}
             </CardContent>
           </Card>
 
@@ -172,7 +170,7 @@ export default async function Page({ params }: any) {
               <p className="font-bold text-2xl ">My Experience</p>
             </CardHeader>
             <CardContent>
-              <p className="md:text-xl">{userProfiles.experience.expInfo}</p>
+              <p className="md:text-xl">{userProfiles.experience}</p>
             </CardContent>
           </Card>
           <Card>
@@ -180,7 +178,7 @@ export default async function Page({ params }: any) {
               <p className="font-bold text-2xl ">My Approach</p>
             </CardHeader>
             <CardContent>
-              <p className="md:text-xl">{userProfiles.approach.approachInfo}</p>
+              <p className="md:text-xl">{userProfiles.approach}</p>
             </CardContent>
           </Card>
         </div>
@@ -206,7 +204,7 @@ export default async function Page({ params }: any) {
             <div className="flex flex-col gap-4">
               <p className="flex gap-4">
                 <FacebookIcon className="h-6 w-6 fill-fuchsia-300" />{" "}
-                {userProfiles.contact.facebook}
+                {userProfiles.contact.fb}
               </p>
               <p className="flex gap-4">
                 <Twitter className="h-6 w-6 fill-fuchsia-300" />{" "}
@@ -214,7 +212,7 @@ export default async function Page({ params }: any) {
               </p>
               <p className="flex gap-4">
                 <Linkedin className="h-6 w-6 fill-fuchsia-300" />{" "}
-                {userProfiles.contact.linkedin}
+                {userProfiles.contact.li}
               </p>
             </div>
           </CardContent>

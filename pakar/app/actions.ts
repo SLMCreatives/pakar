@@ -4,6 +4,7 @@ import { encodedRedirect } from "@/utils/utils";
 import { createClient } from "@/utils/supabase/server";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
+import { revalidatePath } from "next/cache";
 
 export const signUpAction = async (formData: FormData) => {
   const email = formData.get("email")?.toString();
@@ -152,5 +153,128 @@ export const newUser = async (formdata: FormData) => {
 
   if (usercat && catprofile) {
     return redirect("/dashboard");
+  }
+};
+
+export const handleSubmit = async (formdata: FormData) => {
+  const id = formdata.get("userId") as string;
+  const name = formdata.get("name") as string;
+  const bio = formdata.get("bio") as string;
+  const supabase = createClient();
+  const { error } = await supabase
+    .from("trainer_profile")
+    .update({
+      name: name,
+      bio: bio,
+    })
+    .eq("user_id", id)
+    .select();
+
+  if (error) {
+    console.log(error);
+  } else {
+    console.log("success");
+    revalidatePath("/", "layout");
+    redirect("/dashboard");
+  }
+};
+
+export const updateProfileAction = async (formdata: FormData) => {
+  const id = formdata.get("userId") as string;
+  const spcl = formdata.get("speciality") as string;
+  const experience = formdata.get("experience") as string;
+  const expY = formdata.get("expY") as string;
+  const modules = formdata.get("modules") as string;
+  const qual = formdata.get("qualifications") as string;
+  const approach = formdata.get("approach") as string;
+  const supabase = createClient();
+  const { error } = await supabase
+    .from("trainer_profile")
+    .update({
+      speciality: spcl,
+      total_years_exp: expY,
+      experience: experience,
+      approach: approach,
+      training_modules: { modules },
+      qualification: { qual },
+    })
+    .eq("user_id", id)
+    .select();
+
+  if (error) {
+    console.log(error);
+  } else {
+    console.log("success");
+    revalidatePath("/", "layout");
+    redirect("/dashboard");
+  }
+};
+
+export const updateContactAction = async (formdata: FormData) => {
+  const id = formdata.get("userId") as string;
+  const email = formdata.get("email") as string;
+  const phone = formdata.get("phone") as string;
+  const fb = formdata.get("facebook") as string;
+  const x = formdata.get("x") as string;
+  const li = formdata.get("linkedin") as string;
+  const website = formdata.get("website") as string;
+  const supabase = createClient();
+  const { error } = await supabase
+    .from("trainer_profile")
+    .update({
+      contact: { email, phone, fb, x, li, website },
+    })
+    .eq("user_id", id)
+    .select();
+
+  if (error) {
+    console.log(error);
+  } else {
+    console.log("success");
+    revalidatePath("/", "layout");
+    redirect("/dashboard");
+  }
+};
+
+export const uploadAvatarURL = async (formdata: FormData) => {
+  const id = formdata.get("userAid") as string;
+  const avatarFile = formdata.get("avatar") as File;
+  const filename = id + ".jpg";
+  const profFilename = `https://gskuvkqhgpcbgqchxknq.supabase.co/storage/v1/object/public/avatars/${filename}`;
+  console.log(filename, avatarFile);
+  const supabase = createClient();
+  const { data: data1, error: error1 } = await supabase.storage
+    .from("avatars")
+    .upload(filename, avatarFile, { contentType: "image/**", upsert: true });
+
+  const { data: data2, error: error2 } = await supabase
+    .from("trainer_profile")
+    .update({ avatarURL: profFilename })
+    .eq("user_id", id)
+    .select();
+
+  if (error1 || error2) {
+    console.log("Just error", error1 || error2);
+  } else {
+    console.log("avatar uploaded");
+    revalidatePath("/", "layout");
+    redirect("/dashboard");
+  }
+};
+
+export const publishProfileAction = async (formdata: FormData) => {
+  const id = formdata.get("userPid") as string;
+  const supabase = createClient();
+  const { data, error } = await supabase
+    .from("trainer_profile")
+    .update({ published: true })
+    .eq("user_id", id)
+    .select();
+  if (error) {
+    console.log(error);
+  } else {
+    console.log("profile published");
+    revalidatePath("/", "layout");
+    redirect("/dashboard");
   }
 };

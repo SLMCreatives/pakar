@@ -26,58 +26,106 @@ import {
 } from "../ui/table";
 import Image from "../../node_modules/next/image";
 import Link from "../../node_modules/next/link";
-import { ContactRound, ScanSearch } from "lucide-react";
+import {
+  CalendarDays,
+  ContactRound,
+  ScanSearch,
+  SearchIcon,
+  StarIcon,
+} from "lucide-react";
+import {
+  HoverCard,
+  HoverCardContent,
+  HoverCardTrigger,
+} from "../ui/hover-card";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { HoverCardArrow, HoverCardPortal } from "@radix-ui/react-hover-card";
 
 export function TrainersTable({ data }: any) {
   const dataX = data;
-  console.log(dataX);
+  const x = [1, 2, 3, 4];
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Trainers</CardTitle>
+        <CardTitle>All Trainers</CardTitle>
         <CardDescription>Find the perfect trainer for you</CardDescription>
       </CardHeader>
       <CardContent>
         <Table className="w-full hidden md:table">
           <TableHeader>
             <TableRow>
-              <TableHead className="text-nowrap">Trainer</TableHead>
-              <TableHead className="hidden md:table-cell">Email</TableHead>
-              <TableHead className="hidden md:table-cell">Speciality</TableHead>
+              <TableHead className="">Trainer</TableHead>
+              <TableHead className="">Speciality</TableHead>
+              <TableHead className="hidden md:table-cell text-center">
+                Experience
+              </TableHead>
+              <TableHead className="text-center">Rating</TableHead>
               <TableHead className="hidden md:table-cell text-center">
                 Profile
               </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
-            {dataX.map((item: any) => (
+            {data?.map((item: any) => (
               <TableRow key={item.user_id} className="hover:bg-muted group">
                 <TableCell className="text-nowrap">
-                  <div className="flex flex-row text-nowrap gap-2 items-center ">
-                    <Link
-                      key={item.user_id}
-                      href={`/findtrainers/${item.user_id}`}
-                    >
-                      <Image
-                        width={40}
-                        height={40}
-                        className="w-12 h-12 md:w-8 md:h-8 rounded-full group-hover:ring-1 ring-slate-500 aspect-square object-cover"
-                        src={item?.avatarURL || "/logo.jpg"}
-                        alt={item.name}
-                      />
-                    </Link>
+                  <div className="flex flex-row text-nowrap gap-2  justify-start">
                     <div className="flex flex-col">
-                      <p className="text-xl md:text-sm font-medium text-nowrap leading-none">
-                        {item.name}
-                      </p>
+                      <HoverCard openDelay={0} closeDelay={300}>
+                        <HoverCardTrigger>
+                          <p className="text-xl md:text-sm font-semibold text-nowrap cursor-pointer">
+                            {item.name}
+                          </p>
+                        </HoverCardTrigger>
+                        <HoverCardContent
+                          className="w-72"
+                          side="right"
+                          sideOffset={20}
+                        >
+                          <Link
+                            key={item.user_id}
+                            href={`/findtrainers/${item.user_id}`}
+                          >
+                            <div className="flex justify-between items-center space-x-4 p-0">
+                              <Avatar className="h-20 w-20 rounded-sm">
+                                <AvatarImage
+                                  src={item?.avatarURL || "/logo.jpg"}
+                                  alt={item.name}
+                                />
+                                <AvatarFallback>
+                                  {item.name?.slice(0, 1) || "T"}
+                                </AvatarFallback>
+                              </Avatar>
+                              <div className="space-y-1">
+                                <h4 className="text-md font-semibold">
+                                  {item.name}
+                                </h4>
+                                <p className="text-xs text-wrap line-clamp-3">
+                                  {item.bio.split(".")[0]}
+                                </p>
+                              </div>
+                            </div>
+                          </Link>
+                        </HoverCardContent>
+                      </HoverCard>
                     </div>
                   </div>
                 </TableCell>
-                <TableCell className="hidden md:table-cell">
-                  <em className="text-xs">{item.contact.email}</em>
+                <TableCell className="text-wrap table-cell">
+                  <Badge variant="default">{item.speciality}</Badge>
                 </TableCell>
-                <TableCell className="text-wrap hidden md:table-cell">
-                  <Badge variant={item.speciality}>{item.speciality}</Badge>
+                <TableCell className="hidden md:table-cell text-center">
+                  <p className="text-md">{item.total_years_exp} years</p>
+                </TableCell>
+                <TableCell className="text-nowrap table-cell text-center">
+                  <div className="flex flex-row gap-1 items-center justify-center">
+                    {x.map((i: any) => (
+                      <StarIcon
+                        key={i}
+                        className="h-4 w-4 fill-amber-400 text-amber-700"
+                      />
+                    ))}
+                  </div>
                 </TableCell>
                 <TableCell className="hidden md:table-cell text-center">
                   <Link href={`/findtrainers/${item.user_id}`}>
@@ -91,36 +139,28 @@ export function TrainersTable({ data }: any) {
             ))}
           </TableBody>
         </Table>
-        <div className="md:hidden grid grid-cols-1 gap-4">
+
+        {/* mobile view */}
+        <div className="md:hidden grid grid-cols-2 gap-4">
           {dataX.map((item: any) => (
             <Link key={item.user_id} href={`/findtrainers/${item.user_id}`}>
               <Card className="group cursor-pointer aspect-square">
-                <div className="flex flex-col gap-4 p-2">
+                <div className="flex flex-col gap-4 ">
                   <Image
-                    width={200}
-                    height={200}
+                    width={500}
+                    height={500}
                     className="w-full h-fit rounded-sm group-hover:ring-1 ring-slate-500 aspect-square object-cover"
                     src={item?.avatarURL || "/logo.jpg"}
                     alt={item.name}
                   />
-                  <div className="flex flex-col gap-2">
-                    <p className="text-xl md:text-sm font-bold overflow-clip group-hover:overflow-visible text-nowrap leading-none">
-                      {item.name}
-                    </p>
-                    <div className="flex flex-row flex-nowrap w-full justify-between gap-2">
-                      <Badge
-                        className="flex w-fit bg-gradient-to-br text-white from-violet-500 to-fuchsia-500 text-xs text-nowrap"
-                        variant={item.speciality}
-                      >
-                        #{item.speciality}
-                      </Badge>
-                      <Badge
-                        className="flex w-fit text-xs"
-                        variant={item.total_years_exp}
-                      >
-                        {item.total_years_exp} exp
-                      </Badge>
-                    </div>
+                  <div className="flex flex-col gap-2 items-center pb-4">
+                    <p className="text-md font-bold text-nowrap">{item.name}</p>
+                    <Badge
+                      className="flex w-fit bg-gradient-to-br text-white from-violet-500 to-fuchsia-500 text-xs text-nowrap"
+                      variant={item.speciality}
+                    >
+                      #{item.speciality}
+                    </Badge>
                   </div>
                 </div>
               </Card>

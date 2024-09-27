@@ -9,12 +9,13 @@ export default async function TrainersPage() {
   } = await supabase.auth.getUser();
   const { data: trainerList, error: err } = await supabase
     .from("trainer_profile")
-    .select("*");
+    .select("*")
+    .is("published", true)
+    .range(0, 9);
 
   if (error || err) {
     console.log(error || err);
   } else {
-    const userProfiles = trainerList;
     return (
       <div className="flex flex-col gap-8 h-screen items-center justify-start -mt-20">
         <div className="mx-auto w-full max-w-6xl gap-2 pt-10">

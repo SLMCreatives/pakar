@@ -2,14 +2,23 @@
 
 import Link from "next/link";
 import {
+  ArrowRightCircleIcon,
+  AwardIcon,
+  BookCheckIcon,
+  CheckCircle2Icon,
+  CheckIcon,
   CircleUser,
   Delete,
   DeleteIcon,
+  EditIcon,
+  ListCheck,
   Menu,
   Package2,
   Search,
   SearchIcon,
+  SendIcon,
   Trash2Icon,
+  XCircleIcon,
 } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -45,21 +54,31 @@ import { useState } from "react";
 import { createClient } from "@/utils/supabase/client";
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
+import { addAvatar } from "@/app/api/addAvatar/actions";
+import { SubmitButton } from "../submit-button";
+import {
+  handleSubmit,
+  publishProfileAction,
+  updateContactAction,
+  updateProfileAction,
+  uploadAvatarURL,
+} from "@/app/actions";
+import { Separator } from "../ui/separator";
+import { Switch } from "../ui/switch";
 
 export default function Profile({ data, user, cats }: any) {
   const [id, setUserID] = useState(`${user.id}`);
   const [name, setName] = useState(`${data?.name}`);
-  const [avtrURL, setAvatarURL] = useState(`${data?.avatar_url}`);
+  const [avtrURL, setAvatarURL] = useState<File | null>(null);
   const [bio, setBio] = useState(`${data?.bio}`);
   const [expY, setExpY] = useState(`${data?.total_years_exp}`);
   //const [qual, setQual] = useState([`${data.qualification}`]);
-  const [speciality, setSpeciality] = useState(`${data?.speciality}`);
+  const [newspcl, setSpeciality] = useState(`${data?.speciality}`);
   //const [contactInfo, setContactInfo] = useState([`${data.contact}`]);
-  const [expInfo, setExpInfo] = useState([`${data.experience?.expInfo}`]);
+  const [expInfo, setExpInfo] = useState(`${data?.experience}`);
   //const [modules, setModules] = useState([`${data.training_modules.modules}`]);
-  const [approachInfo, setApproachInfo] = useState([
-    `${data.approach?.approachInfo}`,
-  ]);
+  const [approachInfo, setApproachInfo] = useState(`${data?.approach}`);
   const [email, setEmail] = useState(`${data.contact?.email}`);
   const [phone, setPhone] = useState(`${data.contact?.phone}`);
   const [fb, setFb] = useState(`${data.contact?.facebook}`);
@@ -125,65 +144,11 @@ export default function Profile({ data, user, cats }: any) {
     newQuals.splice(index, 1);
     setQuals(newQuals);
   };
-
-  const handleSubmit = async () => {
-    const formData = {
-      cats: cats,
-      id: id,
-      name: name,
-      bio: bio,
-      /*       avatar_url: avtrURL,
-       */ tyl: expY,
-      qualification: {
-        qual: quals,
-      },
-      speciality: speciality,
-      approach: {
-        approachInfo: approachInfo,
-      },
-      experience: {
-        expInfo: expInfo,
-      },
-      training_modules: {
-        modules: modules,
-      },
-      contact: {
-        email: email,
-        phone: phone,
-        facebook: fb,
-        linkedin: li,
-        website: website,
-        x: x,
-      },
-    };
-    console.log(formData);
-    const supabase = createClient();
-    const { error } = await supabase
-      .from(`${cats}_profile`)
-      .update({
-        name: formData.name,
-        bio: formData.bio,
-        /*         avatarUrl: formData.avatar_url,
-         */ total_years_exp: formData.tyl,
-        speciality: formData.speciality,
-        qualification: formData.qualification,
-        approach: formData.approach,
-        contact: formData.contact,
-        experience: formData.experience,
-        training_modules: formData.training_modules,
-      })
-      .eq("user_id", formData.id)
-      .select();
-    if (error) {
-      console.log(error);
-    }
-    return redirect("/dashboard");
-  };
   return (
     <main className="flex min-h-[calc(100vh_-_theme(spacing.16))] flex-1 flex-col gap-4 bg-muted/40 p-4 md:gap-8 md:p-10">
       <div className="mx-auto flex flex-row w-full max-w-6xl items-end justify-between">
-        <div className="flex flex-col gap-2 py-2">
-          <h1 className="text-3xl font-semibold">Profile Details</h1>
+        <div className="flex flex-col gap-2 py-2 px-4">
+          <h1 className="text-3xl font-semibold">Dashboard</h1>
           <p className="text-xs">
             Logged in as:{" "}
             <span className="bg-muted text-muted-foreground rounded-sm px-4 py-1">
@@ -191,11 +156,68 @@ export default function Profile({ data, user, cats }: any) {
             </span>
           </p>
         </div>
-        <Link href={`/findtrainers/${data.user_id}`} target="_blank">
-          <Button variant="ghost" className="gap-2">
-            <SearchIcon className="h-4 w-4" /> View Profile
-          </Button>
-        </Link>
+        <div className="flex flex-col-reverse items-center md:flex-row gap-2">
+          <Popover>
+            <PopoverTrigger asChild>
+              <Button variant="outline" size="sm" className="w-36 gap-2">
+                <EditIcon className="h-4 w-4" /> Upload Avatar
+              </Button>
+            </PopoverTrigger>
+            <PopoverContent className="flex flex-grow w-full p-2 bg-transparent border-none shadow-none">
+              <Card className="w-90">
+                <CardHeader>
+                  <CardTitle>Upload Avatar</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <form id="upload-button">
+                    <div className="flex flex-row gap-2">
+                      <Label htmlFor="userID" className="sr-only" />
+                      <Input
+                        id="userAid"
+                        name="userAid"
+                        value={id}
+                        readOnly
+                        className="sr-only"
+                      />
+                      <Input
+                        id="avatar"
+                        name="avatar"
+                        type="file"
+                        onChange={(e) => setAvatarURL(e.target.files![0])}
+                      />
+                      <Button
+                        type="submit"
+                        variant="default"
+                        formAction={uploadAvatarURL}
+                      >
+                        Upload
+                      </Button>
+                    </div>
+                  </form>
+                </CardContent>
+              </Card>
+            </PopoverContent>
+          </Popover>
+          <form>
+            <Input
+              id="userPid"
+              name="userPid"
+              value={id}
+              readOnly
+              className="sr-only"
+            />
+            <Button
+              variant="default"
+              size="sm"
+              className="gap-2 w-36"
+              disabled={data.published === true}
+              formAction={publishProfileAction}
+            >
+              <SendIcon className="h-4 w-4" />{" "}
+              {data.published === true ? "Published" : "Publish Profile"}
+            </Button>
+          </form>
+        </div>
       </div>
       <div className="mx-auto grid w-full max-w-6xl items-start gap-6">
         <div className="grid gap-6">
@@ -209,173 +231,344 @@ export default function Profile({ data, user, cats }: any) {
             <CardContent>
               <form className="space-y-4">
                 <div className="space-y-2">
-                  <Input id="id" value={id} className="sr-only" />
+                  <Label htmlFor="userId" className="sr-only">
+                    User ID
+                  </Label>
+                  <Input
+                    id="userId"
+                    name="userId"
+                    value={id}
+                    readOnly
+                    className="sr-only"
+                  />
                   <Label htmlFor="name">Name</Label>
                   <Input
                     id="name"
-                    placeholder={data.name}
+                    name="name"
+                    placeholder={data.name || "Enter your name"}
                     maxLength={100}
                     value={name}
                     onChange={(e) => setName(e.target.value)}
-                  />
-                </div>
-                <div className="space-y-2 hidden">
-                  <Label htmlFor="avatar">Display Picture/Avatar URL</Label>
-                  <Input
-                    type="file"
-                    id="avatar"
-                    placeholder="https://example.com/avatar.jpg"
                   />
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="bio">Bio</Label>
                   <Textarea
                     id="bio"
-                    placeholder={data.bio}
+                    name="bio"
+                    placeholder={data.bio || "Enter your bio"}
                     value={bio}
                     onChange={(e) => setBio(e.target.value)}
                     maxLength={250}
                   />
                 </div>
+                <SubmitButton
+                  type="submit"
+                  variant="default"
+                  pendingText="Saving..."
+                  formAction={handleSubmit}
+                  className="w-full"
+                >
+                  Save
+                </SubmitButton>
+              </form>
+            </CardContent>
+          </Card>
+
+          {/* Training Details */}
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex flex-row items-center justify-between w-full">
+                <p>Training Details</p>
+                <Popover>
+                  <PopoverTrigger>
+                    <ListCheck className="h-4 w-4 fill-fuchsia-300" />
+                  </PopoverTrigger>
+                  <PopoverContent className="w-fit p-2 bg-transparent border-none shadow-none">
+                    <Card>
+                      <CardHeader>
+                        <CardTitle>Checklist</CardTitle>
+                      </CardHeader>
+                      <CardContent>
+                        <div className="flex flex-col text-nowrap gap-2 text-sm">
+                          <p className="flex flex-row gap-4">
+                            {newspcl ? (
+                              <CheckCircle2Icon className="h-4 w-4 fill-green-300" />
+                            ) : (
+                              <XCircleIcon className="h-4 w-4 fill-red-300" />
+                            )}
+                            Speciality
+                          </p>
+                          <p className="flex flex-row gap-4">
+                            {expY ? (
+                              <CheckCircle2Icon className="h-4 w-4 fill-green-300" />
+                            ) : (
+                              <XCircleIcon className="h-4 w-4 fill-red-300" />
+                            )}
+                            Years of Experience
+                          </p>
+                          <p className="flex flex-row gap-4">
+                            {modules.length > 0 ? (
+                              <CheckCircle2Icon className="h-4 w-4 fill-green-300" />
+                            ) : (
+                              <XCircleIcon className="h-4 w-4 fill-red-300" />
+                            )}
+                            Training Modules
+                          </p>
+                          <p className="flex flex-row gap-4">
+                            {quals.length > 0 ? (
+                              <CheckCircle2Icon className="h-4 w-4 fill-green-300" />
+                            ) : (
+                              <XCircleIcon className="h-4 w-4 fill-red-300" />
+                            )}
+                            Qualificationss
+                          </p>
+
+                          <p className="flex flex-row gap-4">
+                            {expInfo.length > 3 ? (
+                              <CheckCircle2Icon className="h-4 w-4 fill-green-300" />
+                            ) : (
+                              <XCircleIcon className="h-4 w-4 fill-red-300" />
+                            )}
+                            Experience
+                          </p>
+                          <p className="flex flex-row gap-4">
+                            {approachInfo.length > 3 ? (
+                              <CheckCircle2Icon className="h-4 w-4 fill-green-300" />
+                            ) : (
+                              <XCircleIcon className="h-4 w-4 fill-red-300" />
+                            )}
+                            Training Approach:{" "}
+                          </p>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </PopoverContent>
+                </Popover>
+              </CardTitle>
+              <CardDescription>
+                Update your expert training details.
+              </CardDescription>
+            </CardHeader>
+            <CardContent>
+              <form>
                 <div className="py-2 space-y-2 flex flex-col gap-4">
-                  <h3 className="text-lg font-semibold">Training Details</h3>
-                  <div className="space-y-4 gap-4">
-                    <Label
-                      htmlFor="experience"
-                      className="flex flex-row gap-2 items-center"
-                    >
-                      Total Years of Experience:{" "}
-                      <p className="font-sm px-4 py-1 bg-muted">{expY}</p>
-                    </Label>
-                    <Slider
-                      id="experience"
-                      min={0}
-                      max={50}
-                      step={1}
-                      value={data.total_years_exp?.value}
-                      onValueChange={(e) => setExpY(e.toString())}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="specialty">
-                      Specialty : {data.speciality}
+                  <div className="flex flex-col gap-8 w-full">
+                    <Label htmlFor="userId" className="sr-only">
+                      User ID
                     </Label>
                     <Input
-                      id="specialty"
-                      placeholder={data.speciality}
-                      value={speciality}
-                      onChange={(e) => setSpeciality(e.target.value)}
+                      id="userId"
+                      name="userId"
+                      value={id}
+                      readOnly
+                      className="sr-only"
                     />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="training-modules">Training Modules</Label>
-                    <div className="flex gap-2 items-end">
-                      <div className="flex flex-col gap-2 w-full">
+                    <div className="space-y-10">
+                      <div className="space-y-2">
+                        <Label htmlFor="speciality">Specialty</Label>
                         <Input
-                          type="text"
-                          value={moduleValue}
-                          onChange={handleModuleChange}
-                          onKeyDown={handleKeyDown}
-                          placeholder="Enter module name"
-                        />
-                        <Input
-                          type="text"
-                          disabled
-                          /* value={moduleDescValue}
-                          onChange={handleModuleDescChange}
-                          onKeyDown={handleKeyDownDesc} */
-                          placeholder="Enter module description"
+                          id="speciality"
+                          name="speciality"
+                          placeholder={
+                            data.speciality || "Enter your specialty"
+                          }
+                          value={newspcl}
+                          onChange={(e) => setSpeciality(e.target.value)}
                         />
                       </div>
-                      <Button onClick={handleAddModule}>Add</Button>
-                    </div>
-                  </div>
-                  <div className="space-y-2 p-4 bg-muted/40 rounded-sm">
-                    <p className="font-semibold text-md">Modules</p>
-                    <ul className="space-y-2 flex flex-col">
-                      {modules.map((module, index) => (
-                        <li
-                          key={index}
-                          className="flex flex-row gap-2 items-center justify-between text-sm p-2 font-bold text-muted-foreground"
+                      <div className="space-y-6">
+                        <Label
+                          htmlFor="expY"
+                          className="flex flex-row gap-2 items-center"
                         >
-                          {module}
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={(e) => handleRemoveModule(e, index)}
-                          >
-                            Remove
-                          </Button>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-
-                  <div className="space-y-2">
-                    <Label htmlFor="qualifications">Qualifications</Label>
-                    <div className="flex gap-2 items-end">
-                      <div className="flex flex-col gap-2 w-full">
-                        <Input
-                          type="text"
-                          value={qualValue}
-                          onChange={handleQualChange}
-                          onKeyDown={handleKeyDownQual}
-                          placeholder="Name of Cert (YYYY)"
-                        />
+                          Total Years of Experience
+                        </Label>
+                        <div className="flex flex-row gap-4">
+                          <Slider
+                            id="expY"
+                            name="expY"
+                            min={0}
+                            max={50}
+                            step={1}
+                            value={[parseInt(expY)]}
+                            onValueChange={(e) => setExpY(e[0].toString())}
+                          />
+                          <p className="text-sm">{expY}</p>
+                        </div>
                       </div>
-                      <Button onClick={handleAddQual}>Add</Button>
                     </div>
                   </div>
-                  <div className="space-y-2 p-4 bg-muted/40 rounded-sm">
-                    <p className="font-semibold text-md">Qualifications</p>
-                    <ul className="space-y-2 flex flex-col">
-                      {quals.map((qual, index) => (
-                        <li
-                          key={index}
-                          className="flex flex-row gap-2 items-center justify-between text-sm p-2 font-bold text-muted-foreground"
-                        >
-                          {qual}{" "}
-                          <Button
-                            variant="outline"
-                            size="sm"
-                            onClick={(e) => handleRemoveQual(e, index)}
+                  <Separator className="w-full" />
+                  <div className="flex flex-col gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="training-modules">Training Modules</Label>
+                      <div className="flex gap-2 items-end">
+                        <div className="flex flex-col gap-2 w-full">
+                          <Input
+                            type="text"
+                            value={moduleValue}
+                            onChange={handleModuleChange}
+                            onKeyDown={handleKeyDown}
+                            placeholder="Enter module name"
+                          />
+                          <Input
+                            id="modules"
+                            name="modules"
+                            type="hidden"
+                            value={modules.toString()}
+                            readOnly
+                          />
+                        </div>
+                        <Button onClick={handleAddModule}>Add</Button>
+                      </div>
+                    </div>
+                    <div className="space-y-2 p-4 bg-muted rounded-sm">
+                      <p className="font-semibold text-md">Modules</p>
+                      <ul className="space-y-2 flex flex-col">
+                        {modules && modules.length === 0 && (
+                          <p className="text-sm text-muted-foreground">
+                            No modules yet
+                          </p>
+                        )}
+                        {modules &&
+                          modules.map((module, index) => (
+                            <li
+                              key={index}
+                              className="flex flex-row gap-2 items-center justify-between  text-sm pl-2"
+                            >
+                              <div className="flex gap-2 items-center">
+                                <BookCheckIcon className="h-4 w-4" /> {module}
+                              </div>
+                              <Button
+                                className=""
+                                variant="ghost"
+                                size="icon"
+                                onClick={(e) => handleRemoveModule(e, index)}
+                              >
+                                <Trash2Icon className="h-4 w-4 text-red-300" />
+                              </Button>
+                            </li>
+                          ))}
+                      </ul>
+                    </div>
+                  </div>
+                  <div className="flex flex-col gap-4">
+                    <div className="space-y-2">
+                      <Label htmlFor="qualifications">Qualifications</Label>
+                      <div className="flex gap-2 items-end">
+                        <div className="flex flex-col gap-2 w-full">
+                          <Input
+                            type="text"
+                            value={qualValue}
+                            onChange={handleQualChange}
+                            onKeyDown={handleKeyDownQual}
+                            placeholder="Name of Cert (YYYY)"
+                          />
+                          <Input
+                            id="qualifications"
+                            name="qualifications"
+                            type="hidden"
+                            value={quals}
+                            readOnly
+                          />
+                        </div>
+                        <Button onClick={handleAddQual}>Add</Button>
+                      </div>
+                    </div>
+                    <div className="space-y-2 p-4 bg-muted rounded-sm">
+                      <p className="font-semibold text-md">Qualifications</p>
+                      <ul className="space-y-2 flex flex-col">
+                        {quals?.length === 0 && (
+                          <p className="text-sm text-muted-foreground">
+                            No qualifications yet
+                          </p>
+                        )}
+                        {quals?.map((qual, index) => (
+                          <li
+                            key={index}
+                            className="flex flex-row gap-2 items-center justify-between text-sm pl-2"
                           >
-                            Remove
-                          </Button>
-                        </li>
-                      ))}
-                    </ul>
+                            <div className="flex gap-2 items-center">
+                              <AwardIcon className="h-4 w-4" /> {qual}
+                            </div>{" "}
+                            <Button
+                              className=""
+                              variant="ghost"
+                              size="icon"
+                              onClick={(e) => handleRemoveQual(e, index)}
+                            >
+                              <Trash2Icon className="h-4 w-4 text-red-300" />
+                            </Button>
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="experience-list">Experience</Label>
+                    <Label htmlFor="experience">Experience</Label>
                     <Textarea
-                      id="experience-list"
-                      placeholder={data.experience}
-                      value={expInfo}
-                      onChange={(e) => setExpInfo(e.target.value.split(","))}
-                    />
-                  </div>
-                  <div className="space-y-2">
-                    <Label htmlFor="training-approach">Training Approach</Label>
-                    <Textarea
-                      id="training-approach"
-                      placeholder={data.approach}
-                      value={approachInfo}
-                      onChange={(e) =>
-                        setApproachInfo(e.target.value.split(","))
+                      id="experience"
+                      name="experience"
+                      placeholder={
+                        data.experience.expInfo
+                          ? data.experience
+                          : "Enter your experience"
                       }
+                      value={expInfo}
+                      onChange={(e) => setExpInfo(e.target.value)}
+                    />
+                  </div>
+                  <div className="space-y-2">
+                    <Label htmlFor="approach">Training Approach</Label>
+                    <Textarea
+                      id="approach"
+                      name="approach"
+                      placeholder={
+                        data.approach ? data.approach : "Enter your approach"
+                      }
+                      value={approachInfo}
+                      onChange={(e) => setApproachInfo(e.target.value)}
                     />
                   </div>
                 </div>
-                <div className="space-y-4">
-                  <h3 className="text-lg font-semibold">Contact Details</h3>
+                <SubmitButton
+                  type="submit"
+                  variant="default"
+                  className="w-full"
+                  pendingText="Saving..."
+                  formAction={updateProfileAction}
+                >
+                  Save
+                </SubmitButton>
+              </form>
+            </CardContent>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle>Contact Details</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <form className="grid gap-4">
+                <div className="grid grid-cols-2 gap-4">
+                  <Label htmlFor="userId" className="sr-only">
+                    User ID
+                  </Label>
+                  <Input
+                    id="userId"
+                    name="userId"
+                    value={id}
+                    readOnly
+                    className="sr-only"
+                  />
                   <div className="space-y-2">
                     <Label htmlFor="email">Email</Label>
                     <Input
                       id="email"
+                      name="email"
                       type="email"
                       placeholder="your@email.com"
-                      value={email}
+                      value={user.email}
                       onChange={(e) => setEmail(e.target.value)}
                     />
                   </div>
@@ -383,8 +576,9 @@ export default function Profile({ data, user, cats }: any) {
                     <Label htmlFor="phone">Phone Number</Label>
                     <Input
                       id="phone"
+                      name="phone"
                       type="tel"
-                      placeholder={data.contact || ""}
+                      placeholder={phone ? phone : "+60123456789"}
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                     />
@@ -393,16 +587,18 @@ export default function Profile({ data, user, cats }: any) {
                     <Label htmlFor="facebook">Facebook</Label>
                     <Input
                       id="facebook"
-                      placeholder="Facebook profile URL"
+                      name="facebook"
+                      placeholder={fb ? fb : "https://facebook.com/yourprofile"}
                       value={fb}
                       onChange={(e) => setFb(e.target.value)}
                     />
                   </div>
                   <div className="space-y-2">
-                    <Label htmlFor="twitter">Twitter</Label>
+                    <Label htmlFor="x">X (Twitter)</Label>
                     <Input
-                      id="twitter"
-                      placeholder="Twitter profile URL"
+                      id="x"
+                      name="x"
+                      placeholder={x ? x : "https://x.com/yourprofile"}
                       value={x}
                       onChange={(e) => setX(e.target.value)}
                     />
@@ -411,7 +607,8 @@ export default function Profile({ data, user, cats }: any) {
                     <Label htmlFor="linkedin">LinkedIn</Label>
                     <Input
                       id="linkedin"
-                      placeholder="LinkedIn profile URL"
+                      name="linkedin"
+                      placeholder={li ? li : "https://linkedin.com/yourprofile"}
                       value={li}
                       onChange={(e) => setLi(e.target.value)}
                     />
@@ -420,22 +617,25 @@ export default function Profile({ data, user, cats }: any) {
                     <Label htmlFor="website">Website</Label>
                     <Input
                       id="website"
+                      name="website"
                       type="url"
-                      placeholder="https://yourwebsite.com"
+                      placeholder={
+                        website ? website : "https://yourwebsite.com"
+                      }
                       value={website}
                       onChange={(e) => setWebsite(e.target.value)}
                     />
                   </div>
                 </div>
-                <hr></hr>
-                <div className="flex flex-row mt-4 justify-between">
-                  <Button variant="outline" formAction={handleSubmit}>
-                    Publish
-                  </Button>
-                  <Button variant="destructive" disabled size="icon">
-                    <Trash2Icon className="w-4 h-4" />
-                  </Button>
-                </div>
+                <SubmitButton
+                  type="submit"
+                  variant="default"
+                  className="w-full"
+                  pendingText="Saving..."
+                  formAction={updateContactAction}
+                >
+                  Save
+                </SubmitButton>
               </form>
             </CardContent>
           </Card>

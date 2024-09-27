@@ -8,24 +8,25 @@ export default async function DashboardPage() {
     data: { user },
   } = await supabase.auth.getUser();
 
-  const { data: cat } = await supabase
+  const { data: cat, error: catError } = await supabase
     .from("user_categories")
     .select("category")
     .eq("user_id", user?.id)
     .single();
 
-  const { data: user_dataview, error } = await supabase
-    .from(`${cat?.category}_profile`)
+  const { data: user_dataview, error: profileError } = await supabase
+    .from("trainer_profile")
     .select("*")
     .eq("user_id", user?.id)
     .single();
 
-  if (error) {
-    console.log(error);
+  if (catError || profileError) {
+    console.log(catError || profileError);
+    return redirect("/type");
   } else {
     return (
       <div className="flex flex-col gap-8 -mt-32">
-        <div className="mx-auto w-full max-w-6xl gap-2 pt-16 items-center justify-center">
+        <div className="mx-auto w-full max-w-6xl gap-2 pt-10 items-center justify-center">
           <Profile data={user_dataview} user={user} cats={cat} />
         </div>
       </div>
