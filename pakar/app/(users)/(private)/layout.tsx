@@ -33,7 +33,7 @@ export default async function RootLayout({
     console.log(error);
   } else if (uAvatar)
     return (
-      <div className="absolute top-0 w-full z-40 justify-start bg-white text-black">
+      <div className="w-full">
         <Dheader user={user} avtrURL={uAvatar} userCat={cat} />
         {children}
       </div>
