@@ -1,3 +1,5 @@
+import Footer from "@/components/dashboard/Footer";
+import Header from "@/components/dashboard/Header";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -71,16 +73,8 @@ const logos = [
 
 export default function HomePage() {
   return (
-    <main className="flex flex-col items-center justify-center px-3 lg:mx-52 min-h-[90vh]">
-      {/* <div className="absolute top-0 h-[60vh] w-full">
-        <Image
-          fill
-          src="/bg-hero.jpg"
-          alt="hero"
-          className="h-full w-full object-cover"
-        />
-        <div className="absolute top-0 h-full w-full bg-gradient-to-b from-transparent to-white object-cover"></div>
-      </div> */}
+    <main className="flex flex-col items-center justify-center px-3 lg:mx-52 h-screen">
+      <Header />
       <div className="flex flex-col items-center justify-center gap-4">
         <h1 className="text-6xl font-bold tracking-tight">Pakar.me</h1>
         <p className="text-balance text-center text-lg">
@@ -100,6 +94,7 @@ export default function HomePage() {
         </div>
         <div></div>
       </div>
+      <Footer />
     </main>
   );
 }
