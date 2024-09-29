@@ -135,9 +135,9 @@ export default async function Page({ params }: any) {
                 .split(",")
                 .map((module: any, index: number) => (
                   <Card key={index}>
-                    <CardContent className="text-center justify-start flex py-2 gap-4 md:text-lg font-semibold">
-                      <BookCheckIcon className="h-6 w-6 fill-fuchsia-300" />
-                      {module}
+                    <CardContent className=" items-center flex flex-row py-2 gap-4 md:text-lg font-semibold">
+                      <BookCheckIcon className="min-h-6 min-w-6 fill-fuchsia-300" />
+                      <p className="flex flex-wrap">{module}</p>
                     </CardContent>
                   </Card>
                 ))}
@@ -156,9 +156,9 @@ export default async function Page({ params }: any) {
                 .split(",")
                 .map((qual: any, index: number) => (
                   <Card key={index} className="w-full">
-                    <CardContent className=" justify-start items-center flex py-2 gap-4 md:text-lg font-semibold">
-                      <AwardIcon className="h-8 w-8 fill-violet-300" />
-                      {qual}
+                    <CardContent className="flex flex-row py-2 gap-4 md:text-lg text-md font-semibold items-center">
+                      <AwardIcon className="min-h-6 min-w-6 fill-violet-300" />
+                      <p className="text-wrap">{qual}</p>
                     </CardContent>
                   </Card>
                 ))}

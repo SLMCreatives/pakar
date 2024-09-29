@@ -9,6 +9,7 @@ import {
 } from "@/components/ui/card";
 import { newUser } from "@/app/actions";
 import { createClient } from "@/utils/supabase/server";
+import { Input } from "@/components/ui/input";
 
 export default async function TypePage() {
   const supabase = createClient();
@@ -16,35 +17,44 @@ export default async function TypePage() {
   console.log(user);
   return (
     <div className="flex flex-col gap-4 items-center pt-32 ">
-      <p className="py-4 w-[400px] text-xl">
-        There are two ways to use Pakar.me
-      </p>
-      <Tabs defaultValue="trainer" className="w-[400px]">
-        <TabsList className="grid w-full grid-cols-2">
+      <div className="pt-8">
+        <p className="px-4 w-[400px] text-lg text-balance">Signup as a ...</p>
+      </div>
+      <Tabs defaultValue="" className="w-[400px]">
+        <TabsList align="center" className="grid w-full grid-cols-2">
           <TabsTrigger value="trainer">Trainer</TabsTrigger>
           <TabsTrigger value="recruiter">Recruiter</TabsTrigger>
         </TabsList>
-        <TabsContent value="trainer" className=" p-2 gap-4">
-          <Card>
+        <TabsContent value="trainer" className="p-0">
+          <Card className="p-0 rounded-none m-0">
             <CardHeader>
-              <h3 className="text-xl font-bold">
-                As a{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500">
-                  trainer
-                </span>
-              </h3>
+              <div className="flex flex-col justify-end">
+                <p className="font-extrabold text-transparent  bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500 text-3xl">
+                  Trainer
+                </p>{" "}
+                <p className="text-md text-muted-foreground">or Consultant</p>
+              </div>
             </CardHeader>
             <CardContent>
               <p>
-                Register yourself as a trainer and add yourself to our database.
-                Gain access to your profile, update your information and
-                generate your own profile page.
+                Register yourself as a trainer and add yourself to our database
+                by filling in your details and publishing your profile.
               </p>
             </CardContent>
             <CardFooter>
               <form>
-                <input name="type" id="type" value="trainer" />
-                <input name="id" id="id" value={user?.user?.id} />
+                <input
+                  name="type"
+                  id="type"
+                  value="trainer"
+                  className="hidden"
+                />
+                <input
+                  name="id"
+                  id="id"
+                  value={user?.user?.id}
+                  className="hidden"
+                />
                 <Button
                   formAction={newUser}
                   variant="default"
@@ -59,24 +69,38 @@ export default async function TypePage() {
         <TabsContent value="recruiter" className="p-2 flex flex-col gap-4">
           <Card>
             <CardHeader>
-              <h3 className="text-xl font-bold">
-                As a{" "}
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500">
-                  recruiter
-                </span>
-              </h3>
+              <div className="flex flex-col justify-end">
+                <p className="font-extrabold text-transparent  bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500 text-3xl">
+                  Recruiter
+                </p>{" "}
+                <p className="text-md text-muted-foreground">or Company</p>
+              </div>
             </CardHeader>
             <CardContent>
               <p>
-                Register as a recruiter and start finding the right trainer.
-                Gain access to our database of trainers, view their profile and
-                get in contact with the right one for your needs.
+                Register as a recruiter and gain access to our database of
+                trainers, view their profile and get in contact with the right
+                one for your needs.
+              </p>
+              <p className=" text-xs border-l-2 border-decoration-slice pl-4 mt-4">
+                <span className="font-bold">Coming Soon!</span> <br></br>Leave a
+                review and rate your experience.
               </p>
             </CardContent>
             <CardFooter>
               <form>
-                <input name="type" id="type" value="recruiter" />
-                <input name="id" id="id" value={user?.user?.id} />
+                <Input
+                  name="type"
+                  id="type"
+                  value="recruiter"
+                  className="hidden"
+                />
+                <Input
+                  name="id"
+                  id="id"
+                  value={user?.user?.id}
+                  className="hidden"
+                />
                 <Button
                   variant="default"
                   className="hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-pink-500 hover:to-violet-500"
