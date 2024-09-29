@@ -16,17 +16,20 @@ export default async function TypePage() {
   const { data: user } = await supabase.auth.getUser();
   console.log(user);
   return (
-    <div className="flex flex-col gap-4 items-center pt-32 ">
-      <div className="pt-8">
-        <p className="px-4 w-[400px] text-lg text-balance">Signup as a ...</p>
+    <div className="flex flex-col gap-4 items-center pt-32 h-screen">
+      <div className="py-8 flex flex-col gap-2">
+        <p className="text-xl font-bold ">Thank you for joining Pakar.me!</p>
+        <p className="w-[400px] text-md text-balance ">
+          Do you want to register as a trainer or recruiter?
+        </p>
       </div>
       <Tabs defaultValue="" className="w-[400px]">
-        <TabsList align="center" className="grid w-full grid-cols-2">
+        <TabsList className="grid w-full grid-cols-2">
           <TabsTrigger value="trainer">Trainer</TabsTrigger>
           <TabsTrigger value="recruiter">Recruiter</TabsTrigger>
         </TabsList>
         <TabsContent value="trainer" className="p-0">
-          <Card className="p-0 rounded-none m-0">
+          <Card className="p-0 m-0">
             <CardHeader>
               <div className="flex flex-col justify-end">
                 <p className="font-extrabold text-transparent  bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500 text-3xl">
@@ -39,6 +42,10 @@ export default async function TypePage() {
               <p>
                 Register yourself as a trainer and add yourself to our database
                 by filling in your details and publishing your profile.
+              </p>
+              <p className=" text-xs border-l-2 border-decoration-slice pl-4 mt-4">
+                <span className="font-bold">Coming Soon</span> <br></br>
+                <em>Profile links and analytics!</em>
               </p>
             </CardContent>
             <CardFooter>
@@ -66,7 +73,7 @@ export default async function TypePage() {
             </CardFooter>
           </Card>
         </TabsContent>
-        <TabsContent value="recruiter" className="p-2 flex flex-col gap-4">
+        <TabsContent value="recruiter" className="p-0 m-0 mt-2">
           <Card>
             <CardHeader>
               <div className="flex flex-col justify-end">
@@ -83,8 +90,8 @@ export default async function TypePage() {
                 one for your needs.
               </p>
               <p className=" text-xs border-l-2 border-decoration-slice pl-4 mt-4">
-                <span className="font-bold">Coming Soon!</span> <br></br>Leave a
-                review and rate your experience.
+                <span className="font-bold">Coming Soon</span> <br></br>
+                <em>Leave a review and rate your experience.</em>
               </p>
             </CardContent>
             <CardFooter>
