@@ -54,9 +54,9 @@ const logos = [
 
 export default function HomePage() {
   return (
-    <main className="flex flex-col items-center justify-center px-3 lg:mx-52 min-h-screen">
+    <main className="flex flex-col items-center justify-center min-h-screen md:max-w-2xl max-w-xl mx-auto">
       <Header />
-      <div className="flex flex-col items-center justify-center gap-4 max-w-2xl">
+      <div className="flex flex-col items-center justify-center gap-4">
         <h1 className="text-6xl font-bold tracking-tight">Pakar.me</h1>
         <p className="text-balance text-center text-lg">
           Database of{" "}
@@ -65,7 +65,7 @@ export default function HomePage() {
           </span>{" "}
           in Malaysia complete with their profile and training information.
         </p>
-        <div className="flex flex-row gap-4 items-center my-4">
+        <div className="flex flex-col md:flex-row gap-4 items-center my-4">
           <Link href="/findtrainers">
             <Button size="lg" className="w-52" variant="default">
               Hire A Trainer
