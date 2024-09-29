@@ -14,6 +14,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { createClient } from "@/utils/supabase/client";
 import { EnvelopeOpenIcon, FaceIcon } from "@radix-ui/react-icons";
 import {
@@ -38,7 +39,7 @@ import {
 } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-
+import { Suspense } from "react";
 const gradient = "bg-gradient-to-r from-violet-500 to-fuchsia-500";
 
 export default async function Page({ params }: any) {

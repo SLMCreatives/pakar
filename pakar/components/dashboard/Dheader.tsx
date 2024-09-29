@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { Menu, Search } from "lucide-react";
+import { Menu, Search, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -12,9 +12,15 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Input } from "@/components/ui/input";
-import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
+import {
+  Sheet,
+  SheetClose,
+  SheetContent,
+  SheetTrigger,
+} from "@/components/ui/sheet";
 import { signOutAction } from "@/app/actions";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { useState } from "react";
 
 export default function Dheader({ user, avtrURL, userCat }: any) {
   const uAvatarsrc = avtrURL.avatarURL;
@@ -48,7 +54,7 @@ export default function Dheader({ user, avtrURL, userCat }: any) {
               Upgrade +
             </Link>
           </nav>
-          <Sheet>
+          <Sheet modal={true}>
             <SheetTrigger asChild>
               <Button
                 variant="outline"
@@ -61,28 +67,35 @@ export default function Dheader({ user, avtrURL, userCat }: any) {
             </SheetTrigger>
             <SheetContent side="left">
               <nav className="grid gap-6 text-lg font-medium">
-                <Link
-                  href="/"
-                  className="flex items-center gap-2 text-lg font-semibold md:text-base"
-                >
-                  <Avatar>
-                    <AvatarImage src="/logo.jpg" alt="Pakar.me" />
-                    <AvatarFallback>PM</AvatarFallback>
-                  </Avatar>
-                  <span className="sr-only">Pakar.me</span>
-                </Link>
-                <Link
-                  href="/findtrainers"
-                  className="text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  Trainer Database
-                </Link>
-                <Link
-                  href="/pricing"
-                  className="text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  Upgrade +
-                </Link>
+                <SheetClose asChild>
+                  <Link
+                    href="/"
+                    className="flex items-center gap-2 text-lg font-semibold md:text-base"
+                  >
+                    <Avatar>
+                      <AvatarImage src="/logo.jpg" alt="Pakar.me" />
+                      <AvatarFallback>PM</AvatarFallback>
+                    </Avatar>
+                    <span className="sr-only">Pakar.me</span>
+                  </Link>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Link
+                    href="/findtrainers"
+                    //onClick={handleNavState}
+                    className="text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    Trainer Database
+                  </Link>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Link
+                    href="/pricing"
+                    className="text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    Upgrade +
+                  </Link>
+                </SheetClose>
               </nav>
             </SheetContent>
           </Sheet>
@@ -118,11 +131,11 @@ export default function Dheader({ user, avtrURL, userCat }: any) {
               </DropdownMenuTrigger>
               <DropdownMenuContent align="end">
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem asChild>
                   <Link href="/findtrainers">Find Trainers</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem asChild>
                   <Button
                     variant="ghost"
                     className="text-left mx-0 px-0"
@@ -184,34 +197,42 @@ export default function Dheader({ user, avtrURL, userCat }: any) {
             </SheetTrigger>
             <SheetContent side="left">
               <nav className="grid gap-6 text-lg font-medium">
-                <Link
-                  href="/"
-                  className="flex items-center gap-2 text-lg font-semibold md:text-base"
-                >
-                  <Avatar>
-                    <AvatarImage src="/logo.jpg" alt="Pakar.me" />
-                    <AvatarFallback>PM</AvatarFallback>
-                  </Avatar>
-                  <span className="sr-only">Pakar.me</span>
-                </Link>
-                <Link
-                  href="/findtrainers"
-                  className="text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  Trainer Database
-                </Link>
-                <Link
-                  href="/dashboard"
-                  className="text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  Dashboard
-                </Link>
-                <Link
-                  href={`/findtrainers/${userData.id}`}
-                  className="text-muted-foreground transition-colors hover:text-foreground"
-                >
-                  My Profile
-                </Link>
+                <SheetClose asChild>
+                  <Link
+                    href="/"
+                    className="flex items-center gap-2 text-lg font-semibold md:text-base"
+                  >
+                    <Avatar>
+                      <AvatarImage src="/logo.jpg" alt="Pakar.me" />
+                      <AvatarFallback>PM</AvatarFallback>
+                    </Avatar>
+                    <span className="sr-only">Pakar.me</span>
+                  </Link>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Link
+                    href="/findtrainers"
+                    className="text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    Trainer Database
+                  </Link>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Link
+                    href="/dashboard"
+                    className="text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    Dashboard
+                  </Link>
+                </SheetClose>
+                <SheetClose asChild>
+                  <Link
+                    href={`/findtrainers/${userData.id}`}
+                    className="text-muted-foreground transition-colors hover:text-foreground"
+                  >
+                    My Profile
+                  </Link>
+                </SheetClose>
               </nav>
             </SheetContent>
           </Sheet>
@@ -248,17 +269,17 @@ export default function Dheader({ user, avtrURL, userCat }: any) {
               <DropdownMenuContent align="end">
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem asChild>
                   <Link href="/dashboard">Dashboard</Link>
                 </DropdownMenuItem>
-                <DropdownMenuItem>
+                <DropdownMenuItem asChild>
                   <Link href={`/findtrainers/${userData.id}`}>My Profile</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
-                <DropdownMenuItem>
+                <DropdownMenuItem asChild>
                   <Button
                     variant="ghost"
-                    className="text-left mx-0 px-0"
+                    className="text-left "
                     onClick={() => signOutAction()}
                   >
                     Logout

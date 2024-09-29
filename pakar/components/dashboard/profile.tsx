@@ -66,6 +66,9 @@ import {
 } from "@/app/actions";
 import { Separator } from "../ui/separator";
 import { Switch } from "../ui/switch";
+import { Suspense } from "react";
+import Skeleton from "react-loading-skeleton";
+import Loading from "@/app/(users)/(private)/loading";
 
 export default function Profile({ data, user, cats }: any) {
   const [id, setUserID] = useState(`${user.id}`);

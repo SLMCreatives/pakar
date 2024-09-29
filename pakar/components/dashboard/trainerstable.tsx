@@ -59,7 +59,7 @@ export function TrainersTable({ data }: any) {
               <TableHead className="hidden md:table-cell text-center">
                 Experience
               </TableHead>
-              <TableHead className="text-center">Rating</TableHead>
+              {/* <TableHead className="text-center">Rating</TableHead> */}
               <TableHead className="hidden md:table-cell text-center">
                 Profile
               </TableHead>
@@ -117,7 +117,7 @@ export function TrainersTable({ data }: any) {
                 <TableCell className="hidden md:table-cell text-center">
                   <p className="text-md">{item.total_years_exp} years</p>
                 </TableCell>
-                <TableCell className="text-nowrap table-cell text-center">
+                {/* <TableCell className="text-nowrap table-cell text-center">
                   <div className="flex flex-row gap-1 items-center justify-center">
                     {x.map((i: any) => (
                       <StarIcon
@@ -126,7 +126,7 @@ export function TrainersTable({ data }: any) {
                       />
                     ))}
                   </div>
-                </TableCell>
+                </TableCell> */}
                 <TableCell className="hidden md:table-cell text-center">
                   <Link href={`/findtrainers/${item.user_id}`}>
                     <Button variant="ghost" size="icon" className="h-8 w-8 p-0">
