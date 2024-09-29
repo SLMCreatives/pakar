@@ -62,6 +62,7 @@ export default async function Page({ params }: any) {
           height={500}
           className="w-full md:hidden aspect-square rounded-xl m-0 p-0 object-cover"
         />
+
         <Card className="mx-auto flex flex-col w-full max-w-6xl justify-between">
           <CardHeader className="flex flex-col">
             <CardTitle className="flex flex-col md:flex-col-reverse items-center text-center justify-between gap-6">
@@ -158,7 +159,7 @@ export default async function Page({ params }: any) {
                 .map((qual: any, index: number) => (
                   <Card key={index} className="w-full">
                     <CardContent className="flex flex-row py-2 gap-4 md:text-lg text-md font-semibold items-center">
-                      <AwardIcon className="min-h-6 min-w-6 fill-violet-300" />
+                      <AwardIcon className="min-h-7 min-w-7 fill-violet-300" />
                       <p className="text-wrap">{qual}</p>
                     </CardContent>
                   </Card>
@@ -190,29 +191,29 @@ export default async function Page({ params }: any) {
           <CardContent className="grid grid-cols-1 md:grid-cols-2 gap-4">
             <div className="flex flex-col gap-4">
               <p className="flex gap-4">
-                <Mail className="h-6 w-6 fill-fuchsia-300" />{" "}
+                <Mail className="min-h-6 min-w-6 fill-fuchsia-300" />{" "}
                 {userProfiles.contact.email}
               </p>
               <p className="flex gap-4">
-                <Phone className="h-6 w-6 fill-fuchsia-300" />{" "}
+                <Phone className="min-h-6 min-w-6 fill-fuchsia-300" />{" "}
                 {userProfiles.contact.phone}
               </p>
               <p className="flex gap-4">
-                <Globe className="h-6 w-6 fill-fuchsia-300" />{" "}
+                <Globe className="min-h-6 min-w-6 fill-fuchsia-300" />{" "}
                 {userProfiles.contact.website}
               </p>
             </div>
             <div className="flex flex-col gap-4">
               <p className="flex gap-4">
-                <FacebookIcon className="h-6 w-6 fill-fuchsia-300" />{" "}
+                <FacebookIcon className="min-h-6 min-w-6 fill-fuchsia-300" />{" "}
                 {userProfiles.contact.fb}
               </p>
               <p className="flex gap-4">
-                <Twitter className="h-6 w-6 fill-fuchsia-300" />{" "}
+                <Twitter className="min-h-6 min-w-6 fill-fuchsia-300" />{" "}
                 {userProfiles.contact.x}
               </p>
               <p className="flex gap-4">
-                <Linkedin className="h-6 w-6 fill-fuchsia-300" />{" "}
+                <Linkedin className="min-h-6 min-w-6 fill-fuchsia-300" />{" "}
                 {userProfiles.contact.li}
               </p>
             </div>

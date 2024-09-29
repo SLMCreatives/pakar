@@ -1,3 +1,5 @@
+"use client";
+
 import Footer from "@/components/dashboard/Footer";
 import Header from "@/components/dashboard/Header";
 import { Badge } from "@/components/ui/badge";
@@ -18,6 +20,8 @@ import {
 } from "@/components/ui/carousel";
 import Image from "next/image";
 import Link from "next/link";
+import Autoplay from "embla-carousel-autoplay";
+import { useRef } from "react";
 
 const categories = [
   "Business Management",
@@ -53,11 +57,14 @@ const logos = [
 ];
 
 export default function HomePage() {
+  const plugin = useRef(Autoplay({ delay: 4000, stopOnInteraction: true }));
   return (
     <main className="flex flex-col items-center justify-center min-h-screen md:max-w-2xl max-w-xl mx-auto">
       <Header />
       <div className="flex flex-col items-center justify-center gap-4">
-        <h1 className="text-6xl font-bold tracking-tight">Pakar.me</h1>
+        <h1 className="text-6xl font-bold tracking-tight">
+          <span className="font-extrabold">Pakar</span>.me
+        </h1>
         <p className="text-balance text-center text-lg">
           Database of{" "}
           <span className="font-semibold bg-muted-foreground/20  px-2 rounded-lg">
@@ -73,14 +80,20 @@ export default function HomePage() {
           </Link>
           <Link href="/sign-up">
             <Button size="lg" className="w-52" variant="secondary">
-              Become a Trainer
+              Become A Trainer
             </Button>
           </Link>
         </div>
         <div className="flex gap-4 max-w-2xl py-8">
-          <Carousel orientation="horizontal" opts={{ loop: true }}>
+          <Carousel
+            plugins={[plugin.current]}
+            orientation="horizontal"
+            opts={{ loop: true }}
+            onMouseEnter={plugin.current.stop}
+            onMouseLeave={plugin.current.reset}
+          >
             <CarouselContent>
-              <CarouselItem className="basis-1/2 md:basis-1/4">
+              <CarouselItem className="basis-1/2 md:basis-1/3">
                 <Card>
                   <CardContent className="flex flex-col items-center relative p-0">
                     <Image
@@ -92,14 +105,14 @@ export default function HomePage() {
                     />
                     <Badge
                       variant="default"
-                      className="absolute bottom-4 bg-gradient-to-r from-violet-500 to-fuchsia-500"
+                      className="absolute bottom-4 text-md  "
                     >
-                      #Creativity
+                      Creativity Expert
                     </Badge>
                   </CardContent>
                 </Card>
               </CarouselItem>
-              <CarouselItem className="basis-1/2 md:basis-1/4">
+              <CarouselItem className="basis-1/2 md:basis-1/3">
                 <Card>
                   <CardContent className="flex flex-col items-center relative p-0">
                     <Image
@@ -109,13 +122,13 @@ export default function HomePage() {
                       alt="pk"
                       className="w-full aspect-square object-cover rounded-xl"
                     />
-                    <Badge className="absolute bottom-4 bg-gradient-to-r from-violet-500 to-fuchsia-500">
-                      #Teambuilding
+                    <Badge className="absolute bottom-4 text-md bg-blend-darken">
+                      Teambuilding Expert
                     </Badge>
                   </CardContent>
                 </Card>
               </CarouselItem>
-              <CarouselItem className="basis-1/2 md:basis-1/4">
+              <CarouselItem className="basis-1/2 md:basis-1/3">
                 <Card>
                   <CardContent className="flex flex-col items-center relative p-0">
                     <Image
@@ -125,13 +138,13 @@ export default function HomePage() {
                       alt="pk"
                       className="w-full aspect-square object-cover rounded-xl"
                     />
-                    <Badge className="absolute bottom-4 bg-gradient-to-r from-violet-500 to-fuchsia-500">
-                      #Leadership
+                    <Badge className="absolute bottom-4 text-md">
+                      Leadership Expert
                     </Badge>
                   </CardContent>
                 </Card>
               </CarouselItem>
-              <CarouselItem className="basis-1/2 md:basis-1/4">
+              <CarouselItem className="basis-1/2 md:basis-1/3">
                 <Card>
                   <CardContent className="flex flex-col items-center relative p-0">
                     <Image
@@ -141,8 +154,8 @@ export default function HomePage() {
                       alt="pk"
                       className="w-full aspect-square object-cover rounded-xl"
                     />
-                    <Badge className="absolute bottom-4 bg-gradient-to-r from-violet-500 to-fuchsia-500">
-                      #Finance
+                    <Badge className="absolute bottom-4 text-md">
+                      Financial Expert
                     </Badge>
                   </CardContent>
                 </Card>

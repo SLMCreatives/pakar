@@ -27,6 +27,7 @@ import {
 import Image from "../../node_modules/next/image";
 import Link from "../../node_modules/next/link";
 import {
+  ArrowRightCircleIcon,
   CalendarDays,
   ContactRound,
   ScanSearch,
@@ -40,6 +41,7 @@ import {
 } from "../ui/hover-card";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { HoverCardArrow, HoverCardPortal } from "@radix-ui/react-hover-card";
+import { Popover, PopoverContent, PopoverTrigger } from "../ui/popover";
 
 export function TrainersTable({ data }: any) {
   const dataX = data;
@@ -72,7 +74,16 @@ export function TrainersTable({ data }: any) {
                   <div className="flex flex-row text-nowrap gap-2  justify-start">
                     <div className="flex flex-col">
                       <HoverCard openDelay={0} closeDelay={300}>
-                        <HoverCardTrigger>
+                        <HoverCardTrigger className="flex flex-row gap-2 items-center">
+                          <Avatar className="h-10 w-10 rounded-full">
+                            <AvatarImage
+                              src={item?.avatarURL || "/logo.jpg"}
+                              alt={item.name}
+                            />
+                            <AvatarFallback>
+                              {item.name?.slice(0, 1) || "T"}
+                            </AvatarFallback>
+                          </Avatar>
                           <p className="text-xl md:text-sm font-semibold text-nowrap cursor-pointer">
                             {item.name}
                           </p>
@@ -141,29 +152,68 @@ export function TrainersTable({ data }: any) {
         </Table>
 
         {/* mobile view */}
-        <div className="md:hidden grid grid-cols-2 gap-4">
+        <div className="md:hidden grid grid-cols-1 gap-4">
           {dataX.map((item: any) => (
             <Link key={item.user_id} href={`/findtrainers/${item.user_id}`}>
               <Card className="group cursor-pointer aspect-square">
-                <div className="flex flex-col gap-4 ">
+                <div className="flex relative flex-col gap-4 ">
                   <Image
                     width={500}
                     height={500}
-                    className="w-full h-fit rounded-sm group-hover:ring-1 ring-slate-500 aspect-square object-cover"
+                    className="w-full h-fit rounded-lg group-hover:ring-1 ring-slate-500 aspect-square object-cover"
                     src={item?.avatarURL || "/logo.jpg"}
                     alt={item.name}
                   />
-                  <div className="flex flex-col gap-2 items-center pb-4">
-                    <p className="text-md font-bold text-nowrap">{item.name}</p>
-                    <Badge
-                      className="flex w-fit bg-gradient-to-br text-white from-violet-500 to-fuchsia-500 text-xs text-nowrap"
-                      variant={item.speciality}
-                    >
-                      #{item.speciality}
-                    </Badge>
-                  </div>
+                  <Badge
+                    variant="default"
+                    className="absolute bottom-4 right-4 text-md"
+                  >
+                    {item.name}
+                  </Badge>
+                  {/* </PopoverTrigger>
+                    <PopoverContent>
+                      <Card className="w-72">
+                        <CardHeader>
+                          <CardTitle className="text-xl">{item.name}</CardTitle>
+                        </CardHeader>
+                        <CardContent>
+                          <p className="text-xs line-clamp-2 -mt-2">
+                            {item.bio.slice(0, 200)}
+                          </p>
+                        </CardContent>
+                        <CardFooter className="flex flex-row justify-between">
+                          <Badge
+                            variant="default"
+                            className="flex w-fit text-xs text-nowrap"
+                          >
+                            #{item.speciality}
+                          </Badge>
+                          <ArrowRightCircleIcon className="h-6 w-6 fill-violet-300" />
+                        </CardFooter>
+                      </Card>
+                    </PopoverContent>
+                  </Popover> */}
                 </div>
               </Card>
+              {/* <Card className="w-72">
+                <CardHeader>
+                  <CardTitle className="text-xl">{item.name}</CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-xs line-clamp-2 -mt-2">
+                    {item.bio.slice(0, 200)}
+                  </p>
+                </CardContent>
+                <CardFooter className="flex flex-row justify-between">
+                  <Badge
+                    variant="default"
+                    className="flex w-fit text-xs text-nowrap"
+                  >
+                    #{item.speciality}
+                  </Badge>
+                  <ArrowRightCircleIcon className="h-6 w-6 fill-violet-300" />
+                </CardFooter>
+              </Card> */}
             </Link>
           ))}
         </div>
