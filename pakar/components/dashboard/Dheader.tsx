@@ -178,7 +178,7 @@ export default function Dheader({ user, avtrURL, userCat }: any) {
               Dashboard
             </Link>
             <Link
-              href={`/findtrainers/${userData.id}`}
+              href={`/${userData.id}`}
               className="text-muted-foreground transition-colors hover:text-foreground"
             >
               My Profile
@@ -227,7 +227,7 @@ export default function Dheader({ user, avtrURL, userCat }: any) {
                 </SheetClose>
                 <SheetClose asChild>
                   <Link
-                    href={`/findtrainers/${userData.id}`}
+                    href={`/${userData.id}`}
                     className="text-muted-foreground transition-colors hover:text-foreground"
                   >
                     My Profile
@@ -273,7 +273,7 @@ export default function Dheader({ user, avtrURL, userCat }: any) {
                   <Link href="/dashboard">Dashboard</Link>
                 </DropdownMenuItem>
                 <DropdownMenuItem asChild>
-                  <Link href={`/findtrainers/${userData.id}`}>My Profile</Link>
+                  <Link href={`/${userData.id}`}>My Profile</Link>
                 </DropdownMenuItem>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem asChild>

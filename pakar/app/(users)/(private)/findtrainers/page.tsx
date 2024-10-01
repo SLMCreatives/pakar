@@ -18,11 +18,12 @@ export default async function TrainersPage() {
   } else {
     return (
       <div className="flex flex-col gap-8 h-screen items-center justify-start -mt-20">
-        <div className="mx-auto w-full max-w-6xl gap-2 pt-10">
-          <h1 className="text-3xl text-left font-semibold px-4 md:px-10">
-            Find Trainers
-          </h1>
-          <div className="p-8">
+        <div className="mx-auto w-full max-w-4xl lg:max-w-6xl gap-2 pt-10">
+          <h1 className="text-3xl text-left font-semibold ">Our Trainers</h1>
+          <p className="text-lg text-muted-foreground">
+            Discover the best trainer for your for your next training session.
+          </p>
+          <div className="py-10">
             <TrainersTable data={trainerList} user={user} />
           </div>
         </div>

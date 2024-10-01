@@ -32,7 +32,7 @@ export default async function TypePage() {
           <Card className="p-0 m-0">
             <CardHeader>
               <div className="flex flex-col justify-end">
-                <p className="font-extrabold text-transparent  bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500 text-3xl">
+                <p className="font-extrabold text-transparent  bg-clip-text bg-gradient-to-r from-pink-500 to-indigo-500 text-3xl">
                   Trainer
                 </p>{" "}
                 <p className="text-md text-muted-foreground">or Consultant</p>
@@ -65,7 +65,7 @@ export default async function TypePage() {
                 <Button
                   formAction={newUser}
                   variant="default"
-                  className="hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-pink-500 hover:to-violet-500"
+                  className="hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-pink-500 hover:to-indigo-500"
                 >
                   Register as a trainer
                 </Button>
@@ -77,7 +77,7 @@ export default async function TypePage() {
           <Card>
             <CardHeader>
               <div className="flex flex-col justify-end">
-                <p className="font-extrabold text-transparent  bg-clip-text bg-gradient-to-r from-pink-500 to-violet-500 text-3xl">
+                <p className="font-extrabold text-transparent  bg-clip-text bg-gradient-to-r from-pink-500 to-indigo-500 text-3xl">
                   Recruiter
                 </p>{" "}
                 <p className="text-md text-muted-foreground">or Company</p>
@@ -110,7 +110,7 @@ export default async function TypePage() {
                 />
                 <Button
                   variant="default"
-                  className="hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-pink-500 hover:to-violet-500"
+                  className="hover:text-transparent hover:bg-clip-text hover:bg-gradient-to-r hover:from-pink-500 hover:to-indigo-500"
                   formAction={newUser}
                 >
                   Register as a recruiter

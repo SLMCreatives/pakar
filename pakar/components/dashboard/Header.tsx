@@ -6,12 +6,12 @@ import { Button } from "../ui/button";
 
 const navigation = [
   {
-    name: "Sign Up",
-    href: "/sign-up",
+    name: "Dashboard",
+    href: "/dashboard",
   },
   {
-    name: "Sign In",
-    href: "/sign-in",
+    name: "Find Trainers",
+    href: "/findtrainers",
   },
 ];
 
